@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C# Express 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turtle", "Turtle\Turtle.csproj", "{3E25FC69-2078-46A6-99AB-EFB76D058F39}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E25FC69-2078-46A6-99AB-EFB76D058F39}.Debug|x86.ActiveCfg = Debug|x86
+		{3E25FC69-2078-46A6-99AB-EFB76D058F39}.Debug|x86.Build.0 = Debug|x86
+		{3E25FC69-2078-46A6-99AB-EFB76D058F39}.Release|x86.ActiveCfg = Release|x86
+		{3E25FC69-2078-46A6-99AB-EFB76D058F39}.Release|x86.Build.0 = Release|x86
+		{38F60D52-CF03-48AF-A3DE-1D6F332D38E1}.Debug|x86.ActiveCfg = Debug|x86
+		{38F60D52-CF03-48AF-A3DE-1D6F332D38E1}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

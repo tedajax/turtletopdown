@@ -89,6 +89,7 @@
     <Compile Include="Collision\BoundingObjects\BoundingCircle.cs" />
     <Compile Include="Collision\BoundingObjects\BoundingRectangle.cs" />
     <Compile Include="EntityClasses\Actors\Actor.cs" />
+    <Compile Include="EntityClasses\Actors\Projectile.cs" />
     <Compile Include="EntityClasses\Actors\Player.cs" />
     <Compile Include="EntityClasses\Actors\Target.cs" />
     <Compile Include="EntityClasses\Actors\VisibleActor.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="EntityClasses\Text\Text.cs" />
     <Compile Include="EntityClasses\Text\TextBatch.cs" />
     <Compile Include="Input\InputManager.cs" />
+    <Compile Include="ProjectileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Windows\PlayWindow.cs" />

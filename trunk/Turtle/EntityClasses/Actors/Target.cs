@@ -18,7 +18,9 @@ namespace Turtle
 
         public override void Update(GameTime gameTime)
         {
-            Position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            #if WINDOWS
+                Position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            #endif
 
             base.Update(gameTime);
         }

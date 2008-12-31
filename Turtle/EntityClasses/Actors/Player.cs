@@ -161,13 +161,7 @@ namespace Turtle
                 //Shooting with Right Trigger
                 if (GamePad.GetState(plIndex).Triggers.Right > 0.4f)
                 {
-                    Vector2 projPos = new Vector2(32 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2) + Position.X, 32 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2) + Position.Y);
-                    Vector2 projVel = new Vector2(16 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2), 16 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2));
-                    PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
-                    projVel = new Vector2(16 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2 + MathHelper.PiOver4), 16 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2 + MathHelper.PiOver4));
-                    PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
-                    projVel = new Vector2(16 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2 - MathHelper.PiOver4), 16 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2 - MathHelper.PiOver4));
-                    PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
+                    Shooting();
                 }    
             #else
                 //compile time error
@@ -186,5 +180,7 @@ namespace Turtle
                 TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
             }
         }
+
+        public List<Projectile> GetProjectileList() { return PlayerProjectiles.GetProjectiles(); }
     }
 }

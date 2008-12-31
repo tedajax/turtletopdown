@@ -51,11 +51,11 @@ namespace Turtle
                 //check for circle collisions
                 for (int i = 0; i < this.CollCircCount(); i++)
                 {
-                    BoundingCircle c1 = new BoundingCircle(this.GetCollCircs()[i].Position - GetOrigin() + this.GetPosition(), this.GetCollCircs()[i].Radius);
+                    BoundingCircle c1 = new BoundingCircle(this.GetCollCircs()[i].Position + this.GetPosition(), this.GetCollCircs()[i].Radius);
 
                     for (int j = 0; j < a.CollCircCount(); j++)
                     {
-                        BoundingCircle c2 = new BoundingCircle(a.GetCollCircs()[j].Position - a.GetOrigin() + a.GetPosition(), a.GetCollCircs()[j].Radius);
+                        BoundingCircle c2 = new BoundingCircle(a.GetCollCircs()[j].Position + a.GetPosition(), a.GetCollCircs()[j].Radius);
                         
                         if (c1.Intersects(c2))
                             return true;

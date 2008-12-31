@@ -26,10 +26,11 @@ namespace Turtle
     {
         //Stats
         /*AmmoTypes Ammo;
-        ArmorTypes Armor;
+        ArmorTypes Armor;*/
 
-        byte RateOfFire;
-        byte BulletSpeed;
+        int RateOfFire;
+        TimeSpan TillNextShot;
+        /*byte BulletSpeed;
         byte BulletDamage;*/
 
         byte MaxSpeed;
@@ -69,10 +70,18 @@ namespace Turtle
             target = new Target();
 
             PlayerProjectiles = new ProjectileManager();
+
+            RateOfFire = 100;
+            TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
         }
 
         public override void Update(GameTime gameTime)
         {
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                BaseGame.Quit();
+
+            TillNextShot -= gameTime.ElapsedGameTime;
+
             Controls();
 
             target.Update(gameTime);
@@ -131,13 +140,7 @@ namespace Turtle
                 //Shooting with LMB (left mouse button)
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                 {
-                    Vector2 projPos = new Vector2(32 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2) + Position.X, 32 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2) + Position.Y);
-                    Vector2 projVel = new Vector2(8 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2), 8 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2));
-                    PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
-                    projVel = new Vector2(8 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2 + MathHelper.PiOver4), 8 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2 + MathHelper.PiOver4));
-                    PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
-                    projVel = new Vector2(8 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2 - MathHelper.PiOver4), 8 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2 - MathHelper.PiOver4));
-                    PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
+                    Shooting();
                 }
             
             #elif XBOX
@@ -153,12 +156,35 @@ namespace Turtle
                 }
                 //Position the target nicely
                 target.Position = new Vector2(200 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2) + Position.X, 200 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2) + Position.Y);
-            
+
+
+                //Shooting with Right Trigger
+                if (GamePad.GetState(plIndex).Triggers.Right > 0.4f)
+                {
+                    Vector2 projPos = new Vector2(32 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2) + Position.X, 32 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2) + Position.Y);
+                    Vector2 projVel = new Vector2(16 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2), 16 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2));
+                    PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
+                    projVel = new Vector2(16 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2 + MathHelper.PiOver4), 16 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2 + MathHelper.PiOver4));
+                    PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
+                    projVel = new Vector2(16 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2 - MathHelper.PiOver4), 16 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2 - MathHelper.PiOver4));
+                    PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
+                }    
             #else
                 //compile time error
                 #error Unsupported platform
-
             #endif
+        }
+
+        private void Shooting()
+        {
+            if (TillNextShot.TotalMilliseconds <= 0)
+            {
+                Vector2 projPos = new Vector2(32 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2) + Position.X, 32 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2) + Position.Y);
+                Vector2 projVel = new Vector2(16 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2), 16 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2));
+                PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
+
+                TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
+            }
         }
     }
 }

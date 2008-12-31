@@ -33,6 +33,7 @@ namespace Turtle
 
             Position = pos;
             Velocity = vel;
+            Rotation = rot;
             bulletLife = new TimeSpan(0, 0, 0, 0, msec);
 
             InitCollLists();
@@ -51,6 +52,7 @@ namespace Turtle
             Position += Velocity;
 
             ActorSprite.SetPosition(Position);
+            ActorSprite.SetRotation(Rotation);
         }
 
         public bool Destroy

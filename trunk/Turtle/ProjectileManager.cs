@@ -40,5 +40,7 @@ namespace Turtle
                 ProjectileList[p].Draw();
             }
         }
+
+        public List<Projectile> GetProjectiles() { return ProjectileList; }
     }
 }

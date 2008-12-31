@@ -56,13 +56,15 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Background.cs" />
     <Compile Include="BaseGame.cs" />
     <Compile Include="Camera2D.cs" />
     <Compile Include="Collision\BoundingObjects\BoundingCircle.cs" />
     <Compile Include="Collision\BoundingObjects\BoundingRectangle.cs" />
     <Compile Include="EntityClasses\Actors\Actor.cs" />
+    <Compile Include="EntityClasses\Actors\Enemies\Enemy.cs" />
     <Compile Include="EntityClasses\Actors\Player.cs" />
-    <Compile Include="EntityClasses\Actors\Projectile.cs" />
+    <Compile Include="EntityClasses\Actors\Projectiles\Projectile.cs" />
     <Compile Include="EntityClasses\Actors\Target.cs" />
     <Compile Include="EntityClasses\Actors\VisibleActor.cs" />
     <Compile Include="EntityClasses\Buttons\Button.cs" />

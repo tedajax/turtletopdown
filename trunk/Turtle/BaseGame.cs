@@ -81,6 +81,8 @@ namespace Turtle
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             DebugFont = Content.Load<SpriteFont>("Fonts\\Debug");
+
+            WinMan.AddWindow(new PlayWindow());
         }
 
         protected override void UnloadContent()
@@ -89,7 +91,7 @@ namespace Turtle
 
         protected override void Update(GameTime gameTime)
         {
-            Graphics.Clear(Color.Black);
+            Graphics.Clear(Color.White);
 
             GameInput.UpdateNewInput();
             GameInput.UpdateNewPadInput(PlayerOneIndex);

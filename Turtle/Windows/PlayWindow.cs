@@ -51,6 +51,7 @@ namespace Turtle
                         SomeEnemies.RemoveAt(i);
                         GamePlayer.GetProjectileList().RemoveAt(b);
                         ECount--;
+                        if (i > ECount) i = ECount;
                     }
                 }
             }

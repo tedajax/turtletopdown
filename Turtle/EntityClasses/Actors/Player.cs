@@ -176,6 +176,7 @@ namespace Turtle
                 Vector2 projPos = new Vector2(32 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2) + Position.X, 32 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2) + Position.Y);
                 Vector2 projVel = new Vector2(16 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2), 16 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2));
                 PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
+                PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
 
                 TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
             }

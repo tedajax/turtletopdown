@@ -19,14 +19,14 @@ namespace Turtle
 
         int pxScale;
 
-        public Disintegrate(Texture2D pimg, Vector2 pos)
+        public Disintegrate(Texture2D pimg, Vector2 pos, int pscl)
         {
             particleImage = pimg;
             Position = pos;
 
             alpha = 255;
 
-            pxScale = 16;
+            pxScale = pscl;
 
             pixels = (pimg.Width * pimg.Height) / pxScale;
 
@@ -44,6 +44,8 @@ namespace Turtle
             Origin = imgCenter;
 
             Scale = Vector2.One;
+
+            Rotation = 0;
         }
 
         public override void Update(GameTime gameTime)
@@ -53,13 +55,15 @@ namespace Turtle
 
             base.Update(gameTime);
 
+            Rotation += MathHelper.Pi / 64;
+
             //cycle through move everything in random directions
             for (int i = 0; i < pixels; i++)
             {
                 //calculate the angle from the center of the image to the current pixel point
                 float pxRotation = (float)Math.Atan2((double)(imgPixels[i].Y - imgCenter.Y), (double)(imgPixels[i].X - imgCenter.X));
                 float speed = BaseGame.Rand.Next(100) / 35; // to add some randomness
-                imgPixels[i] += new Vector2((float)Math.Cos((double)pxRotation) * speed, (float)Math.Sin((double)pxRotation) * speed);
+                imgPixels[i] += new Vector2((float)Math.Cos((double)pxRotation + Rotation) * speed, (float)Math.Sin((double)pxRotation + Rotation) * speed);
             }
         }
 
@@ -75,7 +79,7 @@ namespace Turtle
                                                    ResPosition() + BaseGame.Camera.PositionAdd + imgPixels[(particleImage.Width * x) + y],
                                                    sourceRect,
                                                    new Color(255, 255, 255, (byte)alpha),
-                                                   Rotation,
+                                                   0f,
                                                    Origin,
                                                    ResScale(),
                                                    SpriteEffects.None,

@@ -28,6 +28,8 @@ namespace Turtle
 
             InitCollLists();
             CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 32));
+
+            EnemySprite.SetColor(new Color((byte)BaseGame.Rand.Next(256), (byte)BaseGame.Rand.Next(256), (byte)BaseGame.Rand.Next(256)));
         }
 
         public override void Update(GameTime gameTime)
@@ -61,7 +63,8 @@ namespace Turtle
             if (deathState == 0)
             {
                 deathState = 1;
-                enemyDeath = new Disintegrate(EnemySprite.GetImage(), Position, 8);
+                enemyDeath = new Disintegrate(EnemySprite.GetImage(), Position, 4);
+                enemyDeath.ParticleColor = EnemySprite.SColor;
             }
         }
 

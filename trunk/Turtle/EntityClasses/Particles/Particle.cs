@@ -12,6 +12,8 @@ namespace Turtle
         protected int alpha; //for controlling alpha values, pretty much every particle will use this
         protected Texture2D particleImage; //Particles will always have some sort of image
 
+        protected Color particleColor;
+
         public Particle()
         {
             particleImage = null;
@@ -28,6 +30,12 @@ namespace Turtle
         public override void Draw()
         {
             
+        }
+
+        public Color ParticleColor
+        {
+            get { return particleColor; }
+            set { particleColor = value; }
         }
     }
 }

@@ -13,10 +13,7 @@ namespace Turtle
         Background GameBG;
 
         List<Enemy> SomeEnemies;
-        int ECount;
-
-        Disintegrate dtest;
-        
+                
         public PlayWindow()
         {
             Mode = WindowMode.Active;
@@ -31,9 +28,6 @@ namespace Turtle
             {
                 SomeEnemies.Add(new Enemy(BaseGame.randomPoint(-1920, 1920)));
             }
-            ECount = SomeEnemies.Count;
-
-            dtest = new Disintegrate(BaseGame.GetContent().Load<Texture2D>("Images\\Enemies\\basicenemy"), new Vector2(500, 500));
         }
 
         protected override void Initialize()
@@ -44,7 +38,7 @@ namespace Turtle
         protected override void Update(GameTime gameTime)
         {
             //make sure to erase this when proper enemy handling is done
-            for (int i = 0; i < ECount; i++)
+            for (int i = 0; i < SomeEnemies.Count; i++)
             {
                 SomeEnemies[i].Update(gameTime);
                 for (int b = 0; b < GamePlayer.GetProjectileList().Count; b++)
@@ -55,18 +49,13 @@ namespace Turtle
                         SomeEnemies[i].KillEnemy();
                         SomeEnemies[i].SetSolid(false);
                         GamePlayer.GetProjectileList().RemoveAt(b);
-                        ECount--;
-                        if (i > ECount) i = ECount;
-                    }
-
-                    if (SomeEnemies[i].Destroy)
-                        SomeEnemies.RemoveAt(i);
+                    }   
                 }
+                if (SomeEnemies[i].Destroy)
+                    SomeEnemies.RemoveAt(i);
             }
 
             GamePlayer.Update(gameTime);
-
-            dtest.Update(gameTime);
 
             BaseGame.Camera.Position = Vector2.Lerp(BaseGame.Camera.Position, GamePlayer.Position - new Vector2(640, 360), 0.06f);
         }
@@ -81,8 +70,6 @@ namespace Turtle
             }
 
             GamePlayer.Draw();
-
-            dtest.Draw();
         }
     }
 }

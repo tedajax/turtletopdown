@@ -61,8 +61,7 @@ namespace Turtle
             if (deathState == 0)
             {
                 deathState = 1;
-                enemyDeath = new Disintegrate(EnemySprite.GetImage(), Position);
-                enemyDeath.Rotation = Rotation;
+                enemyDeath = new Disintegrate(EnemySprite.GetImage(), Position, 8);
             }
         }
 

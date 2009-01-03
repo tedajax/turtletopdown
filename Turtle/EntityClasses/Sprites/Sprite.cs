@@ -127,5 +127,7 @@ namespace Turtle
         {
             get { return SpriteImage.Height; }
         }
+
+        public Texture2D GetImage() { return SpriteImage; }
     }
 }

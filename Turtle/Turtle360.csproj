@@ -64,6 +64,7 @@
     <Compile Include="EntityClasses\Actors\Actor.cs" />
     <Compile Include="EntityClasses\Actors\Enemies\Enemy.cs" />
     <Compile Include="EntityClasses\Actors\Player.cs" />
+    <Compile Include="EntityClasses\Actors\Projectiles\Missile.cs" />
     <Compile Include="EntityClasses\Actors\Projectiles\Projectile.cs" />
     <Compile Include="EntityClasses\Actors\Target.cs" />
     <Compile Include="EntityClasses\Actors\VisibleActor.cs" />
@@ -71,6 +72,8 @@
     <Compile Include="EntityClasses\Buttons\SpinningButton.cs" />
     <Compile Include="EntityClasses\Buttons\TextButton.cs" />
     <Compile Include="EntityClasses\Entity.cs" />
+    <Compile Include="EntityClasses\Particles\Disintegrate.cs" />
+    <Compile Include="EntityClasses\Particles\Particle.cs" />
     <Compile Include="EntityClasses\Sprites\AnimatedSprite.cs" />
     <Compile Include="EntityClasses\Sprites\Sprite.cs" />
     <Compile Include="EntityClasses\Text\FlashingText.cs" />

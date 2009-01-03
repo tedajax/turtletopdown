@@ -13,7 +13,7 @@ namespace Turtle
         Background GameBG;
 
         List<Enemy> SomeEnemies;
-                
+
         public PlayWindow()
         {
             Mode = WindowMode.Active;

@@ -40,11 +40,8 @@ namespace Turtle
             sourceRect = new Rectangle(0, 0, pxScale, pxScale);
 
             imgCenter = new Vector2(pimg.Width / 2, pimg.Height / 2);
-
             Origin = imgCenter;
-
             Scale = Vector2.One;
-
             Rotation = 0;
         }
 
@@ -62,7 +59,7 @@ namespace Turtle
             {
                 //calculate the angle from the center of the image to the current pixel point
                 float pxRotation = (float)Math.Atan2((double)(imgPixels[i].Y - imgCenter.Y), (double)(imgPixels[i].X - imgCenter.X));
-                float speed = BaseGame.Rand.Next(100) / 35; // to add some randomness
+                float speed = BaseGame.Rand.Next(100) / 15; // to add some randomness
                 imgPixels[i] += new Vector2((float)Math.Cos((double)pxRotation + Rotation) * speed, (float)Math.Sin((double)pxRotation + Rotation) * speed);
             }
         }
@@ -78,7 +75,7 @@ namespace Turtle
                     BaseGame.GetSpriteBatch().Draw(particleImage,
                                                    ResPosition() + BaseGame.Camera.PositionAdd + imgPixels[(particleImage.Width * x) + y],
                                                    sourceRect,
-                                                   new Color(255, 255, 255, (byte)alpha),
+                                                   new Color(particleColor.R, particleColor.G, particleColor.B, (byte)alpha),
                                                    0f,
                                                    Origin,
                                                    ResScale(),

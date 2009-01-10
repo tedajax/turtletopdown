@@ -30,6 +30,7 @@ namespace Turtle
             CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 32));
 
             EnemySprite.SetColor(new Color((byte)BaseGame.Rand.Next(256), (byte)BaseGame.Rand.Next(256), (byte)BaseGame.Rand.Next(256)));
+            Moderator.toAdd.Push(this);
         }
 
         public override void Update(GameTime gameTime)
@@ -72,6 +73,12 @@ namespace Turtle
         {
             get { return destroy; }
             set { destroy = value; }
+        }
+
+        public override void Collision(Actor gameActor)
+        {
+            KillEnemy();
+            Moderator.toRemove.Push(this);
         }
     }
 }

@@ -25,6 +25,8 @@ namespace Turtle
             SolidObject = true;
 
             InitCollLists();
+
+            Moderator.toAdd.Push(this);
         }
 
         public Projectile(Vector2 pos, Vector2 vel, float rot, int msec)
@@ -42,20 +44,34 @@ namespace Turtle
 
             InitCollLists();
             CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 8));
+            Moderator.toAdd.Push(this);
         }
 
 
         public override void Update(GameTime gameTime)
         {
+            //Check if you've collided with any enemies
+            foreach (GridSquare g in gridSquares)
+            {
+                foreach (Actor A in g.Actors)
+                {
+                    A.Collision(this);
+                    Moderator.toRemove.Push(this);
+                }
+            }
+
             bulletLife -= gameTime.ElapsedGameTime;
 
             if (bulletLife.TotalMilliseconds <= 0)
+            {
                 destroy = true;
-
+                Moderator.toRemove.Push(this);
+            }
             Position += Velocity;
 
             ActorSprite.SetPosition(Position);
             ActorSprite.SetRotation(Rotation);
+            Moderator.HasMoved(this);
         }
 
         public bool Destroy

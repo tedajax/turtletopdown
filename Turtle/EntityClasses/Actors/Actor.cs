@@ -5,10 +5,20 @@ using Microsoft.Xna.Framework;
 
 namespace Turtle
 {
+    public enum actorType
+    {
+        Player,
+        Bullet,
+        Enemy,
+        Misc
+    }
+
+
     public abstract class Actor : Entity
     {
         protected List<BoundingRectangle> CollisionBoxes;
         protected List<BoundingCircle> CollisionCircles;
+        protected actorType Type;
 
         /// <summary>
         /// Solid Object means that it will Fire collision events if Colliding with another object
@@ -58,7 +68,9 @@ namespace Turtle
         {
             Moderator.Dispose(this);
         }
-                
+
+        public actorType getType() { return this.Type; }
+
         public List<BoundingRectangle> GetCollBoxes() { return CollisionBoxes; }
         public void SetCollBoxes(List<BoundingRectangle> newcol) { CollisionBoxes = newcol; }
         public void AddCollBox(BoundingRectangle newcol) { CollisionBoxes.Add(newcol); }

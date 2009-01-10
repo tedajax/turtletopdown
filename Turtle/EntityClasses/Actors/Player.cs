@@ -50,6 +50,7 @@ namespace Turtle
         {
             Initialize();
             plIndex = PlayerIndex.One;
+            this.Type = actorType.Player;
         }
 
         public Player(PlayerIndex pi)
@@ -72,7 +73,7 @@ namespace Turtle
 
             PlayerProjectiles = new ProjectileManager();
 
-            RateOfFire = 50;
+            RateOfFire = 500;
             TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
         }
 

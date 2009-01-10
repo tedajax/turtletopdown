@@ -17,7 +17,7 @@ namespace Turtle
             SpriteImage = null;
             Hidden = false;
             SpriteColor = Color.White;
-
+         
             Scale = Vector2.One;
         }
 
@@ -93,6 +93,7 @@ namespace Turtle
         {
             if (!Hidden)
             {
+                
                 BaseGame.GetSpriteBatch().Draw(SpriteImage,         //The image to use
                                                ResPosition() + BaseGame.Camera.PositionAdd,       //Use the entity position 
                                                null,                //We don't need a source rectangle (no animation :'< )

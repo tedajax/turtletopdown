@@ -9,12 +9,35 @@ namespace Turtle
     {
         protected List<BoundingRectangle> CollisionBoxes;
         protected List<BoundingCircle> CollisionCircles;
+
+        /// <summary>
+        /// Solid Object means that it will Fire collision events if Colliding with another object
+        /// If the object is not solid, it may still recieve collision events from other solid objects
+        /// it is up to each individual object to utilize the data
+        /// </summary>
         protected Boolean SolidObject;
+
+        protected List<GridSquare> gridSquares;
+        public List<GridSquare> GridSquares
+        {
+            get { return this.gridSquares; }
+        }
+        public void addGridSquare(GridSquare newSquare)
+        {
+            gridSquares.Add(newSquare);
+        }
+        public void clearGridSquares()
+        {
+            gridSquares.Clear();
+        }
+
+   
 
         protected void InitCollLists()
         {
             CollisionBoxes = new List<BoundingRectangle>();
             CollisionCircles = new List<BoundingCircle>();
+            gridSquares = new List<GridSquare>();
         }
 
         public override void Update(GameTime gameTime)
@@ -25,6 +48,15 @@ namespace Turtle
         public override void Draw()
         {
             throw new Exception("This method should not be used!");
+        }
+
+        /// <summary>
+        /// By Default this dispose method calls the dispose method in the Moderator but if a special manager needs to take care of disposal
+        /// seperately, then this method can be overridden for that purpose.
+        /// </summary>
+        public virtual void Dispose()
+        {
+            Moderator.Dispose(this);
         }
                 
         public List<BoundingRectangle> GetCollBoxes() { return CollisionBoxes; }
@@ -93,6 +125,11 @@ namespace Turtle
             }
 
             return false;
+        }
+
+        public virtual void Collision(Actor gameActor)
+        {
+            //do nothing
         }
 
         public Boolean Solid() { return SolidObject; }

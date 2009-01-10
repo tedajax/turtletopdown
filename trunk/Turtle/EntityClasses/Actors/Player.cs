@@ -60,6 +60,7 @@ namespace Turtle
 
         private void Initialize()
         {
+            InitCollLists();
             ActorSprite = new Sprite(BaseGame.GetContent().Load<Texture2D>("Images\\Ships\\playership"));
 
             MaxSpeed = 5;
@@ -88,13 +89,15 @@ namespace Turtle
             PlayerProjectiles.Update(gameTime);
 
             Position += Velocity;
+            if (Velocity.Length() > 0) Moderator.HasMoved(this);
             ActorSprite.SetPosition(Position);
             ActorSprite.SetRotation(Rotation);
+            
         }
 
         public override void Draw()
         {
-            PlayerProjectiles.Draw();
+           // PlayerProjectiles.Draw();
             ActorSprite.Draw();
             target.Draw();
         }

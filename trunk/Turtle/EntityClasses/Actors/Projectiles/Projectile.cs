@@ -14,9 +14,11 @@ namespace Turtle
 
         //if true the projectile manager will remove this bullet
         bool destroy;
-
+        //delete this
+        bool tempflag = false;
         public Projectile()
         {
+            this.Type = actorType.Bullet;
             Position = Vector2.Zero;
             Velocity = Vector2.Zero;
             
@@ -27,6 +29,7 @@ namespace Turtle
             InitCollLists();
 
             Moderator.toAdd.Push(this);
+            
         }
 
         public Projectile(Vector2 pos, Vector2 vel, float rot, int msec)
@@ -55,8 +58,14 @@ namespace Turtle
             {
                 foreach (Actor A in g.Actors)
                 {
-                    A.Collision(this);
-                    Moderator.toRemove.Push(this);
+                    if (A.getType() == actorType.Enemy)
+                    {
+                        A.Collision(this);
+                        //Moderator.toRemove.Push(this);
+                        Moderator.Dispose(this);
+                        destroy = true;
+                        tempflag = true;
+                    }
                 }
             }
 
@@ -65,13 +74,16 @@ namespace Turtle
             if (bulletLife.TotalMilliseconds <= 0)
             {
                 destroy = true;
-                Moderator.toRemove.Push(this);
+                Moderator.Dispose(this);
             }
             Position += Velocity;
 
             ActorSprite.SetPosition(Position);
             ActorSprite.SetRotation(Rotation);
-            Moderator.HasMoved(this);
+            if (!tempflag)
+            {
+                Moderator.HasMoved(this);
+            }
         }
 
         public bool Destroy

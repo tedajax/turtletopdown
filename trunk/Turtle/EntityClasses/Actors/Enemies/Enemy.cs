@@ -18,6 +18,7 @@ namespace Turtle
 
         public Enemy(Vector2 pos)
         {
+            this.Type = actorType.Enemy;
             //The base enemy will load the really retarded sprite I made
             EnemySprite = new Sprite(BaseGame.GetContent().Load<Texture2D>("Images\\Enemies\\basicenemy"));
 
@@ -70,6 +71,7 @@ namespace Turtle
                 deathState = 1;
                 enemyDeath = new Disintegrate(EnemySprite.GetImage(), Position, 4);
                 enemyDeath.ParticleColor = EnemySprite.SColor;
+                this.Type = actorType.Misc;
             }
         }
 

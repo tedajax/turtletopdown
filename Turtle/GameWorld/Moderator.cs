@@ -51,7 +51,7 @@ namespace Turtle
 
         public static void Dispose(Actor gameActor)
         {
-            toRemove.Push(gameActor);
+         //   toRemove.Push(gameActor);
             Disposed.Push(gameActor);
         }
 

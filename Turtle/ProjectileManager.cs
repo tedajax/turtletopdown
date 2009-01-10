@@ -28,7 +28,10 @@ namespace Turtle
                 Projectile proj = ProjectileList[p];
                 proj.Update(gameTime);
                 if (proj.Destroy)
+                {
                     ProjectileList.Remove(proj);
+                    proj.Dispose();
+                }
             }
         }
 

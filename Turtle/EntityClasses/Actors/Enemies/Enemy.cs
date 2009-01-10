@@ -45,7 +45,11 @@ namespace Turtle
             {
                 enemyDeath.Update(gameTime);
                 if (enemyDeath.Destroy)
+                {
                     destroy = true;
+                    Moderator.toRemove.Push(this);
+                    deathState = 3;
+                }
             }
             EnemySprite.SetPosition(Position);
             EnemySprite.SetRotation(Rotation);
@@ -78,7 +82,7 @@ namespace Turtle
         public override void Collision(Actor gameActor)
         {
             KillEnemy();
-            Moderator.toRemove.Push(this);
+            
         }
     }
 }

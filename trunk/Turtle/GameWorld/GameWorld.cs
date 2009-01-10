@@ -56,7 +56,7 @@ namespace Turtle
             //Find only the Actors near the player and draw them (including the player)
             Vector2 Position = GamePlayers[0].Position;
             GridSquare Start = CollisionManager.findGridSquare(Position);
-            List<GridSquare> allSquares = CollisionManager.findGridSquares(Start, 2);
+            List<GridSquare> allSquares = CollisionManager.findGridSquares(Start, 8);
             foreach (GridSquare g in allSquares)
             {
                 foreach (Actor v in g.Actors)

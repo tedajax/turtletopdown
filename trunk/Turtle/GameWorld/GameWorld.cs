@@ -21,6 +21,10 @@ namespace Turtle
         /// </summary>
         CollisionManager CollisionManager;
 
+        /// <summary>
+        /// List of Actors that don't have a specified manager but still need update calls
+        /// </summary>
+        List<Actor> gameActors;
         //TODO: ADD Particle System
         //TODO: ADD ENEMY MANGMENT
         //TODO: ADD WORLD MANAGMENT (Background, etc)
@@ -31,7 +35,8 @@ namespace Turtle
         {
            
             GamePlayers = new List<Player>();
-            CollisionManager = new CollisionManager(150);
+            gameActors = new List<Actor>();
+            CollisionManager = new CollisionManager(200);
             GamePlayers.Add(new Player());
             GameBG = new Background();
             Moderator.Initialize();
@@ -44,6 +49,19 @@ namespace Turtle
             {
                 p.Update(gameTime);
             }
+            Stack<Actor> disposal = new Stack<Actor>();
+            foreach (Actor a in gameActors)
+            {
+                if (a.IsDisposed())
+                    disposal.Push(a);
+                else
+                    a.Update(gameTime);
+            }
+            while (disposal.Count > 0)
+            {
+                gameActors.Remove(disposal.Pop());
+            }
+
             CollisionManager.Update(true);
             BaseGame.Camera.Position = Vector2.Lerp(BaseGame.Camera.Position, GamePlayers[0].Position - new Vector2(640, 360), 0.06f);
 
@@ -66,6 +84,11 @@ namespace Turtle
             }
         }
 
+
+        public void addActor(Actor gameActor)
+        {
+            this.gameActors.Add(gameActor);
+        }
 
 
 

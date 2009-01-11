@@ -10,6 +10,7 @@ namespace Turtle
         Player,
         Bullet,
         Enemy,
+        Environment,
         Misc
     }
 
@@ -19,6 +20,13 @@ namespace Turtle
         protected List<BoundingRectangle> CollisionBoxes;
         protected List<BoundingCircle> CollisionCircles;
         protected actorType Type;
+
+        /// <summary>
+        /// This boolean will be set to true once the Actor has been disposed of by Moderator/CollisionManager
+        /// </summary>
+        protected bool isDisposed = false;
+        
+
 
         /// <summary>
         /// Solid Object means that it will Fire collision events if Colliding with another object
@@ -66,10 +74,17 @@ namespace Turtle
         /// </summary>
         public virtual void Dispose()
         {
+            this.isDisposed = true;
             Moderator.Dispose(this);
         }
 
         public actorType getType() { return this.Type; }
+        /// <summary>
+        /// This Value is true if the Collision Manager/Moderator has disposed of the Object
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDisposed() { return isDisposed; }
+
 
         public List<BoundingRectangle> GetCollBoxes() { return CollisionBoxes; }
         public void SetCollBoxes(List<BoundingRectangle> newcol) { CollisionBoxes = newcol; }

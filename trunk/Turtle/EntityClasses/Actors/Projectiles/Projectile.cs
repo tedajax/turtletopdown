@@ -60,11 +60,14 @@ namespace Turtle
                 {
                     if (A.getType() == actorType.Enemy)
                     {
-                        A.Collision(this);
-                        //Moderator.toRemove.Push(this);
-                        Moderator.Dispose(this);
-                        destroy = true;
-                        tempflag = true;
+                        if (A.CollidesWith(this))
+                        {
+                            A.Collision(this);
+                            //Moderator.toRemove.Push(this);
+                            Moderator.Dispose(this);
+                            destroy = true;
+                            tempflag = true;
+                        }
                     }
                 }
             }

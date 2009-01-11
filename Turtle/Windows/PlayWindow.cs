@@ -27,11 +27,13 @@ namespace Turtle
             //make 50 enemies spread them out across the level in random spots
             gameWorld = new GameWorld();
             SomeEnemies = new List<Enemy>();
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 50; i++)
             {
                 SomeEnemies.Add(new Enemy(BaseGame.randomPoint(-1920, 1920)));
             }
-            
+
+
+            gameWorld.addActor(new SimpleWall(new Vector2(640,480)));
         }
 
         protected override void Initialize()

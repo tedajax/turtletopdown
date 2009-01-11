@@ -70,6 +70,7 @@
     <Compile Include="EntityClasses\Actors\Projectiles\Projectile.cs" />
     <Compile Include="EntityClasses\Actors\Target.cs" />
     <Compile Include="EntityClasses\Actors\VisibleActor.cs" />
+    <Compile Include="EntityClasses\Actors\World Objects\SimpleWall.cs" />
     <Compile Include="EntityClasses\Buttons\Button.cs" />
     <Compile Include="EntityClasses\Buttons\SpinningButton.cs" />
     <Compile Include="EntityClasses\Buttons\TextButton.cs" />

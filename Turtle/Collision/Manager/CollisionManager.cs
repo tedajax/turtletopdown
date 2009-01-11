@@ -167,7 +167,7 @@ namespace Turtle
                 for (int i = 0; i < gameActor.GetCollBoxes().Count; i++)
                 {
                     BoundingRectangle BoundingRect = CollBoxes[i];
-                    Rectangle NormRect = new Rectangle((int)BoundingRect.X+(int)gameActor.Position.X, (int)BoundingRect.Y+(int)gameActor.Position.Y, (int)BoundingRect.Width, (int)BoundingRect.Height);
+                    Rectangle NormRect = new Rectangle((int)BoundingRect.X+(int)gameActor.Position.X - (int)gameActor.GetOrigin().X, (int)BoundingRect.Y+(int)gameActor.Position.Y - (int)gameActor.GetOrigin().Y, (int)BoundingRect.Width, (int)BoundingRect.Height);
                     addRect(gameActor, NormRect);
                 }
                 //Loop through the Collision Circles

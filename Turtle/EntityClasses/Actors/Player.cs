@@ -75,6 +75,9 @@ namespace Turtle
 
             RateOfFire = 500;
             TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
+
+            this.CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 32));
+            this.SolidObject = true;
         }
 
         public override void Update(GameTime gameTime)
@@ -184,6 +187,17 @@ namespace Turtle
                 TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
             }
         }
+
+        public override void Collision(Actor gameActor)
+        {
+            if (gameActor.getType() == actorType.Environment)
+            {
+                Vector2 normal = Vector2.Normalize(this.velocity);
+                this.velocity = (Vector2.Reflect(this.velocity, normal ))*1.5f;
+            }
+        }
+
+        
 
         public List<Projectile> GetProjectileList() { return PlayerProjectiles.GetProjectiles(); }
     }

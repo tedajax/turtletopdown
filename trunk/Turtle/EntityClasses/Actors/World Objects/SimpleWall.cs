@@ -28,19 +28,8 @@ namespace Turtle
 
         public override void  Update(GameTime gameTime)
         {
-            foreach(GridSquare g in this.gridSquares)
-            {
-                foreach(Actor A in g.Actors)
-                {
-                    if (A.getType() == actorType.Player)
-                    {
-                        if (A.CollidesWith(this))
-                        {
-                            A.Collision(this);
-                        }
-                    }
-                }
-            }
+            
+            
 
  	       
         }

@@ -76,7 +76,7 @@ namespace Turtle
             RateOfFire = 500;
             TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
 
-            this.CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 32));
+            this.CollisionBoxes.Add(new BoundingRectangle(Vector2.Zero, new Vector2(32, 32)));
             this.SolidObject = true;
         }
 
@@ -84,6 +84,21 @@ namespace Turtle
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 BaseGame.Quit();
+
+            foreach (GridSquare g in this.gridSquares)
+            {
+                foreach (Actor A in g.Actors)
+                {
+                    if (A.getType() == actorType.Environment)
+                    {
+                        if (A.CollidesWith(this))
+                        {
+                            Vector2 normal = Vector2.Normalize(this.velocity);
+                            this.velocity = (Vector2.Reflect(this.velocity, normal)) * 1.5f;
+                        }
+                    }
+                }
+            }
 
             TillNextShot -= gameTime.ElapsedGameTime;
 
@@ -192,8 +207,7 @@ namespace Turtle
         {
             if (gameActor.getType() == actorType.Environment)
             {
-                Vector2 normal = Vector2.Normalize(this.velocity);
-                this.velocity = (Vector2.Reflect(this.velocity, normal ))*1.5f;
+               
             }
         }
 

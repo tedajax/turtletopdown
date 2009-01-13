@@ -49,13 +49,28 @@ namespace Turtle
 
         public bool Intersects(BoundingRectangle r)
         {            
-            Vector2 rectCenter = new Vector2(r.X + r.Width / 2, r.Y + r.Height / 2);
+            /*Vector2 rectCenter = new Vector2(r.X + r.Width / 2, r.Y + r.Height / 2);
             float dist = Vector2.Distance(rectCenter, Position) - Radius;
             if (dist < r.Width / 2)
                 if (dist < r.Height / 2)
                     return true;
 
-            return false;
+            return false;*/
+
+            Vector2 Distance = this.Position - (r.Position + new Vector2(r.Width / 2, r.Height / 2));
+            Distance.X = Math.Abs(Distance.X);
+            Distance.Y = Math.Abs(Distance.Y);
+
+            if (Distance.X > (r.Width / 2 + Radius)) { return false; }
+            if (Distance.Y > (r.Height / 2 + Radius)) { return false; }
+
+            if (Distance.X <= (r.Width / 2)) { return true; }
+            if (Distance.Y <= (r.Height / 2)) { return true; }
+
+            float cornerDistance = (float)Math.Sqrt(Math.Pow((Distance.X - r.Width / 2), 2) +
+                                  Math.Pow((Distance.Y - r.Height / 2), 2));
+
+            return (cornerDistance <= Radius);
         }
     }
 }

@@ -119,13 +119,29 @@ namespace Turtle
 
         public bool Intersects(BoundingCircle c)
         {
+            /*
             Vector2 rectCenter = new Vector2(X + Width / 2, Y + Height / 2);
             float dist = Vector2.Distance(rectCenter, c.Position) - c.Radius;
             if (dist < Width / 2)
                 if (dist < Height / 2)
                     return true;
 
-            return false;
+            return false;*/
+            Vector2 Distance = c.Position - (Position + new Vector2(Width / 2, Height / 2));
+            Distance.X = Math.Abs(Distance.X);
+            Distance.Y = Math.Abs(Distance.Y);
+            
+            if (Distance.X > (this.Width/2 + c.Radius)) { return false; }
+            if (Distance.Y > (this.Height/2 + c.Radius)) { return false; }
+
+            if (Distance.X <= (this.Width/2)) { return true; } 
+            if (Distance.Y <= (this.Height/2)) { return true; }
+
+            float cornerDistance = (float)Math.Sqrt(Math.Pow((Distance.X - this.Width / 2),2) +
+                                  Math.Pow((Distance.Y - this.Height/2),2));
+
+            return (cornerDistance <= c.Radius);
+           
         }
     }
 }

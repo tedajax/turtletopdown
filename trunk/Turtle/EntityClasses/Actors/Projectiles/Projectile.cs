@@ -72,6 +72,7 @@ namespace Turtle
                         {
                            // this.Velocity = Vector2.Negate(this.velocity);
                             this.velocity = Vector2.Zero ;
+                            bulletLife = new TimeSpan(1, 0, 0);
                         }
                         
                     }

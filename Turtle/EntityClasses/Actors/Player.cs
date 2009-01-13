@@ -87,7 +87,13 @@ namespace Turtle
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 BaseGame.Quit();
-           
+
+            if (BaseGame.Input.GetKeyPressedState(Keys.Space) == KeyPressedState.Pressed)
+            {
+                Missile m = new Missile(Position, Rotation - MathHelper.PiOver2);
+                PlayerProjectiles.Add(m);
+            }
+
             foreach (GridSquare g in this.gridSquares)
             {
                 foreach (Actor A in g.Actors)

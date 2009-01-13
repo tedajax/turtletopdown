@@ -135,7 +135,7 @@ namespace Turtle
                     BoundingRectangle b1 = new BoundingRectangle(this.GetCollBoxes()[i].Position + this.GetPosition() - GetOrigin(), this.GetCollBoxes()[i].Dimensions);
                     for (int j = 0; j < a.CollCircCount(); j++)
                     {
-                        BoundingCircle c2 = new BoundingCircle(a.GetCollCircs()[j].Position - a.GetOrigin() + a.GetPosition(), a.GetCollCircs()[j].Radius);
+                        BoundingCircle c2 = new BoundingCircle(a.GetCollCircs()[j].Position + a.GetPosition(), a.GetCollCircs()[j].Radius);
 
                         if (b1.Intersects(c2))
                             return true;

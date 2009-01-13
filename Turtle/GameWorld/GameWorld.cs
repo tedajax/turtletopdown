@@ -36,7 +36,7 @@ namespace Turtle
            
             GamePlayers = new List<Player>();
             gameActors = new List<Actor>();
-            CollisionManager = new CollisionManager(200);
+            CollisionManager = new CollisionManager(500);
             GamePlayers.Add(new Player());
             GameBG = new Background();
             Moderator.Initialize();

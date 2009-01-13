@@ -46,6 +46,8 @@ namespace Turtle
         //Oh shit the player has their own projectile manager, we're getting fancy now
         ProjectileManager PlayerProjectiles;
 
+     
+
         public Player()
         {
             Initialize();
@@ -76,7 +78,8 @@ namespace Turtle
             RateOfFire = 500;
             TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
 
-            this.CollisionBoxes.Add(new BoundingRectangle(Vector2.Zero, new Vector2(32, 32)));
+           // this.CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 32));
+            this.CollisionBoxes.Add(new BoundingRectangle(Vector2.Zero, new Vector2(64,64)));
             this.SolidObject = true;
         }
 
@@ -84,7 +87,7 @@ namespace Turtle
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 BaseGame.Quit();
-
+           
             foreach (GridSquare g in this.gridSquares)
             {
                 foreach (Actor A in g.Actors)
@@ -93,8 +96,10 @@ namespace Turtle
                     {
                         if (A.CollidesWith(this))
                         {
-                            Vector2 normal = Vector2.Normalize(this.velocity);
-                            this.velocity = (Vector2.Reflect(this.velocity, normal)) * 1.5f;
+                         
+                            Vector2 newVector = A.GetPosition() - this.Position;
+                            newVector.Normalize();
+                            this.Velocity = 3 * Vector2.Negate(newVector);
                         }
                     }
                 }

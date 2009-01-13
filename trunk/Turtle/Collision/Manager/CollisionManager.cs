@@ -112,19 +112,25 @@ namespace Turtle
         {
             //Start at the Top Left
             Vector2 Point = new Vector2(gameRectangle.Left, gameRectangle.Top);
-            addActor(gameActor, findGridSquare(Point));
+            GridSquare gridSquare = findGridSquare(Point);
+         
 
+
+            Rectangle gridRect = new Rectangle((int)gridSquare.Key.X * partitionSize, (int)gridSquare.Key.Y * partitionSize, partitionSize, partitionSize);
+            int LeftMost = gridRect.X;
             //Add the Actor into all the gridsquares that touch the current game Rectangle
-            while (containsRect(Point, gameRectangle))
+            while (gameRectangle.Intersects(gridRect))
             {
-                while (containsRect(Point + new Vector2(partitionSize,0), gameRectangle))
-                {
-                    //Move to the Right by 1 Parition
-                    Point.X += partitionSize;
-                    addActor(gameActor, findGridSquare(Point));
+                addActor(gameActor, findGridSquare(new Vector2(gridRect.X, gridRect.Y)));
+                gridRect.X += partitionSize;
+                while (gameRectangle.Intersects(gridRect))
+                {     
+                        addActor(gameActor, findGridSquare(new Vector2(gridRect.X, gridRect.Y)));
+                        gridRect.X += partitionSize;
+                    
                 }
-                Point.X = gameRectangle.Left;
-                Point.Y += partitionSize;
+                gridRect.X = LeftMost;
+                gridRect.Y += partitionSize;
 
             }
 

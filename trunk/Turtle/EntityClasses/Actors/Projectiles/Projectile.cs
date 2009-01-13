@@ -47,6 +47,7 @@ namespace Turtle
 
             InitCollLists();
             CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 8));
+            //CollisionBoxes.Add(new BoundingRectangle(Vector2.Zero,new Vector2(16,16)));
             Moderator.toAdd.Push(this);
         }
 
@@ -58,17 +59,23 @@ namespace Turtle
             {
                 foreach (Actor A in g.Actors)
                 {
-                    if (A.getType() == actorType.Enemy)
+                    if (A.CollidesWith(this))
                     {
-                        if (A.CollidesWith(this))
+                        if (A.getType() == actorType.Enemy)
                         {
                             A.Collision(this);
-                            //Moderator.toRemove.Push(this);
                             Moderator.Dispose(this);
                             destroy = true;
                             tempflag = true;
                         }
+                        else if (A.getType() == actorType.Environment)
+                        {
+                           // this.Velocity = Vector2.Negate(this.velocity);
+                            this.velocity = Vector2.Zero ;
+                        }
+                        
                     }
+                    
                 }
             }
 
@@ -77,6 +84,7 @@ namespace Turtle
             if (bulletLife.TotalMilliseconds <= 0)
             {
                 destroy = true;
+                tempflag = true;
                 Moderator.Dispose(this);
             }
             Position += Velocity;

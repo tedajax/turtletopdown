@@ -25,7 +25,7 @@ namespace Turtle
         /// </summary>
         public Missile(Vector2 pos, float rot)
         {
-            lockedOn = true;
+            lockedOn = false;
             targetVector = Vector2.One * 100;
 
             ActorSprite = new Sprite(BaseGame.GetContent().Load<Texture2D>("Images\\Projectiles\\missile"));
@@ -33,10 +33,10 @@ namespace Turtle
             Position = pos;
             Rotation = rot;
 
-            speed = 5f;
+            speed = 8f;
             turnSpeed = 0.1f;
 
-            tillLockOn = new TimeSpan(0, 0, 0, 0, 0);
+            tillLockOn = new TimeSpan(0, 0, 0, 0, 500);
 
             Origin = new Vector2(15, 31);
 
@@ -72,9 +72,9 @@ namespace Turtle
             //get the angle between the two locations
             float targetAngle = (float)Math.Atan2(y, x);
             //get a difference between the two angles and constrain it
-            float difference = BaseGame.WrapValueRadian(targetAngle - Rotation);
+            float difference = WrapAngle(targetAngle - Rotation);
 
-            if (difference > lockAccuracy)
+            if (Math.Abs(difference) > lockAccuracy)
             {
                 //clamp the difference within the turnspeed range
                 difference = MathHelper.Clamp(difference, -turnSpeed, turnSpeed);
@@ -94,6 +94,19 @@ namespace Turtle
                 targetVector = tar;
                 lockedOn = true;
             }
+        }
+
+        private static float WrapAngle(float radians)
+        {
+            while (radians < -MathHelper.Pi)
+            {
+                radians += MathHelper.TwoPi;
+            }
+            while (radians > MathHelper.Pi)
+            {
+                radians -= MathHelper.TwoPi;
+            }
+            return radians;
         }
 
         /// <summary>

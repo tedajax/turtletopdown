@@ -33,7 +33,7 @@ namespace Turtle
             Position = pos;
             Rotation = rot;
 
-            speed = 8f;
+            speed = 12f;
             turnSpeed = 0.1f;
 
             tillLockOn = new TimeSpan(0, 0, 0, 0, 500);
@@ -41,10 +41,42 @@ namespace Turtle
             Origin = new Vector2(15, 31);
 
             lockAccuracy = 0.1f;
+
+            InitCollLists();
+            CollisionCircles.Add(new BoundingCircle(new Vector2(16, 0), 16));
+
+            Moderator.toAdd.Push(this);
+
+            projectileLife = new TimeSpan(0, 0, 4);
+
+            ActorSprite.Layer = 0.1f;
         }
 
         public override void Update(GameTime gameTime)
         {
+            //Check if you've collided with any enemies
+            foreach (GridSquare g in gridSquares)
+            {
+                foreach (Actor A in g.Actors)
+                {
+                    if (A.CollidesWith(this))
+                    {
+                        if (A.getType() == actorType.Enemy || A.getType() == actorType.Environment)
+                        {
+                            destroy = true;
+                            this.Dispose();
+                        }
+                    }
+                }
+            }
+
+            projectileLife -= gameTime.ElapsedGameTime;
+            if (projectileLife.TotalMilliseconds <= 0)
+            {
+                destroy = true;
+                this.Dispose();
+            }
+
             lockedOn = (tillLockOn.TotalMilliseconds > 0) ? false : true;
             if (tillLockOn.TotalMilliseconds > 0) tillLockOn -= gameTime.ElapsedGameTime;
 
@@ -52,6 +84,8 @@ namespace Turtle
             {
                 TurnToTarget();
             }
+
+            UpdateColCirc();
 
             //move forward based on rotation
             VelocityX = (float)Math.Cos(Rotation) * speed;
@@ -61,6 +95,14 @@ namespace Turtle
 
             ActorSprite.SetPosition(Position);
             ActorSprite.SetRotation(Rotation);
+
+            if (!destroy)
+                Moderator.HasMoved(this);
+        }
+
+        private void UpdateColCirc()
+        {
+            CollisionCircles[0].Position = new Vector2((float)Math.Cos(Rotation) * 16, (float)Math.Sin(Rotation) * 16);
         }
 
         private void TurnToTarget()

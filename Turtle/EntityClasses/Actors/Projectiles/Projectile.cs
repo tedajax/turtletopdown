@@ -10,26 +10,23 @@ namespace Turtle
     class Projectile : VisibleActor
     {
         //when this reaches 0 set the destroy flag to true
-        TimeSpan bulletLife;
+        protected TimeSpan projectileLife;
 
         //if true the projectile manager will remove this bullet
-        bool destroy;
-        //delete this
-        bool tempflag = false;
+        protected bool destroy;
+        
         public Projectile()
         {
             this.Type = actorType.Bullet;
             Position = Vector2.Zero;
             Velocity = Vector2.Zero;
             
-            bulletLife = new TimeSpan(0, 0, 0);
+            projectileLife = new TimeSpan(0, 0, 0);
 
             SolidObject = true;
 
             InitCollLists();
-
             Moderator.toAdd.Push(this);
-            
         }
 
         public Projectile(Vector2 pos, Vector2 vel, float rot, int msec)
@@ -41,7 +38,7 @@ namespace Turtle
             Position = pos;
             Velocity = vel;
             Rotation = rot;
-            bulletLife = new TimeSpan(0, 0, 0, 0, msec);
+            projectileLife = new TimeSpan(0, 0, 0, 0, msec);
 
             SolidObject = true;
 
@@ -49,6 +46,8 @@ namespace Turtle
             CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 8));
             //CollisionBoxes.Add(new BoundingRectangle(Vector2.Zero,new Vector2(16,16)));
             Moderator.toAdd.Push(this);
+
+            ActorSprite.Layer = 0.1f;
         }
 
 
@@ -61,38 +60,27 @@ namespace Turtle
                 {
                     if (A.CollidesWith(this))
                     {
-                        if (A.getType() == actorType.Enemy)
+                        if (A.getType() == actorType.Enemy || A.getType() == actorType.Environment)
                         {
-                            A.Collision(this);
-                            Moderator.Dispose(this);
+                            this.Dispose();
                             destroy = true;
-                            tempflag = true;
                         }
-                        else if (A.getType() == actorType.Environment)
-                        {
-                           // this.Velocity = Vector2.Negate(this.velocity);
-                            this.velocity = Vector2.Zero ;
-                            bulletLife = new TimeSpan(1, 0, 0);
-                        }
-                        
                     }
-                    
                 }
             }
 
-            bulletLife -= gameTime.ElapsedGameTime;
+            projectileLife -= gameTime.ElapsedGameTime;
 
-            if (bulletLife.TotalMilliseconds <= 0)
+            if (projectileLife.TotalMilliseconds <= 0)
             {
                 destroy = true;
-                tempflag = true;
-                Moderator.Dispose(this);
+                this.Dispose();
             }
             Position += Velocity;
 
             ActorSprite.SetPosition(Position);
             ActorSprite.SetRotation(Rotation);
-            if (!tempflag)
+            if (!destroy)
             {
                 Moderator.HasMoved(this);
             }

@@ -11,6 +11,7 @@ namespace Turtle
         protected Texture2D SpriteImage;
         protected Boolean Hidden;
         protected Color SpriteColor;
+        protected float layer;
 
         public Sprite()
         {
@@ -19,6 +20,8 @@ namespace Turtle
             SpriteColor = Color.White;
          
             Scale = Vector2.One;
+
+            Initialize();
         }
 
         /// <summary>
@@ -79,6 +82,8 @@ namespace Turtle
         {
             Origin = new Vector2(SpriteImage.Width / 2, SpriteImage.Height / 2);
             Scale = Vector2.One;
+
+            Layer = 1f;
         }
 
         public override void Update(GameTime gameTime)
@@ -102,7 +107,7 @@ namespace Turtle
                                                Origin,         //Origin should be set to the middle
                                                ResScale(),          //Scale of the image
                                                SpriteEffects.None,  //No sprite effects
-                                               0);                  //Layer depth thing is useless for our purposes
+                                               layer);                  //Layer depth thing is useless for our purposes
             }
         }
 
@@ -127,6 +132,12 @@ namespace Turtle
         public int Height
         {
             get { return SpriteImage.Height; }
+        }
+
+        public float Layer
+        {
+            get { return layer; }
+            set { layer = value; }
         }
 
         public Texture2D GetImage() { return SpriteImage; }

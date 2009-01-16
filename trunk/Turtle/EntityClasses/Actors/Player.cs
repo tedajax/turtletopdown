@@ -29,7 +29,9 @@ namespace Turtle
         ArmorTypes Armor;*/
 
         int RateOfFire;
+        int RateOfMissileFire;
         TimeSpan TillNextShot;
+        TimeSpan TillNextMissile;
         /*byte BulletSpeed;
         byte BulletDamage;*/
 
@@ -75,8 +77,10 @@ namespace Turtle
 
             PlayerProjectiles = new ProjectileManager();
 
-            RateOfFire = 500;
+            RateOfFire = 100;
+            RateOfMissileFire = 1000;
             TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
+            TillNextMissile = new TimeSpan(0, 0, 0, 0, RateOfMissileFire);
 
            // this.CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 32));
             this.CollisionBoxes.Add(new BoundingRectangle(Vector2.Zero, new Vector2(64,64)));
@@ -87,12 +91,6 @@ namespace Turtle
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 BaseGame.Quit();
-
-            if (BaseGame.Input.GetKeyPressedState(Keys.Space) == KeyPressedState.Pressed)
-            {
-                Missile m = new Missile(Position, Rotation - MathHelper.PiOver2);
-                PlayerProjectiles.Add(m);
-            }
 
             foreach (GridSquare g in this.gridSquares)
             {
@@ -112,6 +110,7 @@ namespace Turtle
             }
 
             TillNextShot -= gameTime.ElapsedGameTime;
+            TillNextMissile -= gameTime.ElapsedGameTime;
 
             Controls();
 
@@ -211,6 +210,14 @@ namespace Turtle
                 PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
 
                 TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
+            }
+
+            if (TillNextMissile.TotalMilliseconds <= 0)
+            {
+                PlayerProjectiles.Add(new Missile(Position + new Vector2((float)Math.Cos(Rotation) * 16, (float)Math.Sin(Rotation) * 16), Rotation - MathHelper.PiOver2));
+                PlayerProjectiles.Add(new Missile(Position + new Vector2((float)Math.Cos(Rotation - MathHelper.Pi) * 16, (float)Math.Sin(Rotation - MathHelper.Pi) * 16), Rotation - MathHelper.PiOver2));
+
+                TillNextMissile = new TimeSpan(0, 0, 0, 0, RateOfMissileFire);
             }
         }
 

@@ -20,6 +20,7 @@ namespace Turtle
                 for (int y = -30; y < 30; y++)
                 {
                     BgSprites.Add(new Sprite(BaseGame.GetContent().Load<Texture2D>("Images\\Background\\sand"), new Vector2(x * 64, y * 64)));
+                    BgSprites[BgSprites.Count - 1].Layer = 0f;
                 }
             }
         }

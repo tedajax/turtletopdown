@@ -31,6 +31,8 @@ namespace Turtle
 
         public Projectile(Vector2 pos, Vector2 vel, float rot, int msec)
         {
+            this.Type = actorType.Bullet;
+
             ActorSprite = new Sprite(BaseGame.GetContent().Load<Texture2D>("Images\\Projectiles\\basicbullet"));
 
             Origin = new Vector2(7, 7);

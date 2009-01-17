@@ -11,7 +11,8 @@ namespace Turtle
         Bullet,
         Enemy,
         Environment,
-        Misc
+        Misc,
+        Targeting
     }
 
 
@@ -60,12 +61,12 @@ namespace Turtle
 
         public override void Update(GameTime gameTime)
         {
-            throw new Exception("This method should not be used!");
+            
         }
 
         public override void Draw()
         {
-            throw new Exception("This method should not be used!");
+            
         }
 
         /// <summary>

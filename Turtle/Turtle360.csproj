@@ -68,6 +68,7 @@
     <Compile Include="EntityClasses\Actors\Player.cs" />
     <Compile Include="EntityClasses\Actors\Projectiles\Missile.cs" />
     <Compile Include="EntityClasses\Actors\Projectiles\Projectile.cs" />
+    <Compile Include="EntityClasses\Actors\Projectiles\TargetSystem.cs" />
     <Compile Include="EntityClasses\Actors\Target.cs" />
     <Compile Include="EntityClasses\Actors\VisibleActor.cs" />
     <Compile Include="EntityClasses\Actors\World Objects\SimpleWall.cs" />

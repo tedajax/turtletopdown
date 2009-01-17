@@ -19,14 +19,18 @@ namespace Turtle
 
         float lockAccuracy;
 
+        TargetSystem targeting;
+
         /// <summary>
         /// Parameter free constructor
         /// Not recommended for use
         /// </summary>
         public Missile(Vector2 pos, float rot)
         {
+            this.Type = actorType.Bullet;
+
             lockedOn = false;
-            targetVector = Vector2.One * 100;
+            targetVector = Vector2.Zero;
 
             ActorSprite = new Sprite(BaseGame.GetContent().Load<Texture2D>("Images\\Projectiles\\missile"));
 
@@ -34,7 +38,7 @@ namespace Turtle
             Rotation = rot;
 
             speed = 12f;
-            turnSpeed = 0.1f;
+            turnSpeed = 0.2f;
 
             tillLockOn = new TimeSpan(0, 0, 0, 0, 500);
 
@@ -50,6 +54,7 @@ namespace Turtle
             projectileLife = new TimeSpan(0, 0, 4);
 
             ActorSprite.Layer = 0.1f;
+            targeting = new TargetSystem(Position, 2000);
         }
 
         public override void Update(GameTime gameTime)
@@ -77,7 +82,8 @@ namespace Turtle
                 this.Dispose();
             }
 
-            lockedOn = (tillLockOn.TotalMilliseconds > 0) ? false : true;
+            if (tillLockOn.TotalMilliseconds > 0 && !lockedOn)
+                lockToEnemy();
             if (tillLockOn.TotalMilliseconds > 0) tillLockOn -= gameTime.ElapsedGameTime;
 
             if (lockedOn)
@@ -103,6 +109,40 @@ namespace Turtle
         private void UpdateColCirc()
         {
             CollisionCircles[0].Position = new Vector2((float)Math.Cos(Rotation) * 16, (float)Math.Sin(Rotation) * 16);
+        }
+
+        private void lockToEnemy()
+        {
+            List<Vector2> possibleTargets = new List<Vector2>();
+
+            //find all enemey positions and put into possible targets list
+            foreach (GridSquare g in targeting.GetGridSquares())
+            {
+                foreach (Actor a in g.Actors)
+                {
+                    if (a.getType() == actorType.Enemy)
+                        possibleTargets.Add(a.Position);
+                }
+            }
+
+            if (possibleTargets.Count > 0)
+            {
+                float lowdistance = Vector2.DistanceSquared(Position, possibleTargets[0]);
+                int lowindex = 0;
+
+                for (int i = 1; i < possibleTargets.Count; i++)
+                {
+                    float dist = Vector2.DistanceSquared(Position, possibleTargets[i]);
+                    if (dist < lowdistance)
+                    {
+                        lowdistance = dist;
+                        lowindex = i;
+                    }
+                }
+
+                targetVector = possibleTargets[lowindex];
+                lockedOn = true;
+            }
         }
 
         private void TurnToTarget()

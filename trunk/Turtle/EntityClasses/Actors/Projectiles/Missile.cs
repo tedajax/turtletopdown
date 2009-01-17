@@ -40,7 +40,7 @@ namespace Turtle
             speed = 12f;
             turnSpeed = 0.2f;
 
-            tillLockOn = new TimeSpan(0, 0, 0, 0, 500);
+            tillLockOn = new TimeSpan(0, 0, 0, 0, 250);
 
             Origin = new Vector2(15, 31);
 
@@ -82,7 +82,7 @@ namespace Turtle
                 this.Dispose();
             }
 
-            if (tillLockOn.TotalMilliseconds > 0 && !lockedOn)
+            if (tillLockOn.TotalMilliseconds <= 0 && !lockedOn)
                 lockToEnemy();
             if (tillLockOn.TotalMilliseconds > 0) tillLockOn -= gameTime.ElapsedGameTime;
 
@@ -113,6 +113,9 @@ namespace Turtle
 
         private void lockToEnemy()
         {
+            targeting.Position = Position;
+            Moderator.HasMoved(targeting);
+
             List<Vector2> possibleTargets = new List<Vector2>();
 
             //find all enemey positions and put into possible targets list

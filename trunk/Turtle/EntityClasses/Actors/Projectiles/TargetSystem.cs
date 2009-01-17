@@ -13,8 +13,7 @@ namespace Turtle
             Position = pos;
 
             InitCollLists();
-            int sizeover2 = size / 2;
-            CollisionBoxes.Add(new BoundingRectangle(new Vector2(PositionX - sizeover2, PositionY - sizeover2), Vector2.One * size));
+            CollisionBoxes.Add(new BoundingRectangle(Vector2.Zero, Vector2.One * size));
 
             SolidObject = true;
 

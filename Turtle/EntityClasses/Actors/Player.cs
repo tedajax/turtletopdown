@@ -78,7 +78,7 @@ namespace Turtle
             PlayerProjectiles = new ProjectileManager();
 
             RateOfFire = 100;
-            RateOfMissileFire = 1000;
+            RateOfMissileFire = 500;
             TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
             TillNextMissile = new TimeSpan(0, 0, 0, 0, RateOfMissileFire);
 
@@ -214,8 +214,15 @@ namespace Turtle
 
             if (TillNextMissile.TotalMilliseconds <= 0)
             {
-                PlayerProjectiles.Add(new Missile(Position + new Vector2((float)Math.Cos(Rotation) * 16, (float)Math.Sin(Rotation) * 16), Rotation - MathHelper.PiOver2));
-                PlayerProjectiles.Add(new Missile(Position + new Vector2((float)Math.Cos(Rotation - MathHelper.Pi) * 16, (float)Math.Sin(Rotation - MathHelper.Pi) * 16), Rotation - MathHelper.PiOver2));
+                int rad = 16;
+
+                for (int posMult = 1; posMult <= 1; posMult++)
+                {
+                    int dist = rad * posMult;
+
+                    PlayerProjectiles.Add(new Missile(Position + new Vector2((float)Math.Cos(Rotation) * dist, (float)Math.Sin(Rotation) * dist), Rotation - MathHelper.PiOver2));
+                    PlayerProjectiles.Add(new Missile(Position + new Vector2((float)Math.Cos(Rotation - MathHelper.Pi) * dist, (float)Math.Sin(Rotation - MathHelper.Pi) * dist), Rotation - MathHelper.PiOver2));
+                }
 
                 TillNextMissile = new TimeSpan(0, 0, 0, 0, RateOfMissileFire);
             }

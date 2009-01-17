@@ -36,6 +36,21 @@ namespace Turtle
 
         public override void Update(GameTime gameTime)
         {
+            foreach (GridSquare g in gridSquares)
+            {
+                foreach (Actor a in g.Actors)
+                {
+                    if (a.getType() == actorType.Bullet)
+                    {
+                        if (a.CollidesWith(this))
+                        {
+                            KillEnemy();
+                            a.Collision(this);
+                        }
+                    }
+                }
+            }
+
             if (deathState == 0)
             {
                 //make the enemy just spin in circles

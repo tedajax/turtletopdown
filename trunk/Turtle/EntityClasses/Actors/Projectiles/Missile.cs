@@ -51,10 +51,10 @@ namespace Turtle
 
             Moderator.toAdd.Push(this);
 
-            projectileLife = new TimeSpan(0, 0, 4);
+            projectileLife = new TimeSpan(0, 0, 2);
 
             ActorSprite.Layer = 0.1f;
-            targeting = new TargetSystem(Position, 2000);
+            targeting = new TargetSystem(Position, 1000);
         }
 
         public override void Update(GameTime gameTime)
@@ -82,7 +82,7 @@ namespace Turtle
                 this.Dispose();
             }
 
-            if (tillLockOn.TotalMilliseconds <= 0 && !lockedOn)
+            if (tillLockOn.TotalMilliseconds <= 0)
                 lockToEnemy();
             if (tillLockOn.TotalMilliseconds > 0) tillLockOn -= gameTime.ElapsedGameTime;
 
@@ -145,6 +145,10 @@ namespace Turtle
 
                 targetVector = possibleTargets[lowindex];
                 lockedOn = true;
+            }
+            else
+            {
+                lockedOn = false;
             }
         }
 
@@ -210,6 +214,11 @@ namespace Turtle
         public override void Draw()
         {
             ActorSprite.Draw();
+        }
+
+        public override void Collision(Actor gameActor)
+        {
+            destroy = true;
         }
     }
 }

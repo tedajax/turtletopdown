@@ -26,8 +26,8 @@ namespace Turtle
         /// This boolean will be set to true once the Actor has been disposed of by Moderator/CollisionManager
         /// </summary>
         protected bool isDisposed = false;
-        
 
+        protected bool destroy;
 
         /// <summary>
         /// Solid Object means that it will Fire collision events if Colliding with another object
@@ -157,7 +157,13 @@ namespace Turtle
 
         public virtual void Collision(Actor gameActor)
         {
-            //do nothing
+            
+        }
+
+        public bool Destroy
+        {
+            get { return destroy; }
+            set { destroy = value; }
         }
 
         public Boolean Solid() { return SolidObject; }

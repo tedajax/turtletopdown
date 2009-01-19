@@ -77,7 +77,7 @@ namespace Turtle
 
             PlayerProjectiles = new ProjectileManager();
 
-            RateOfFire = 100;
+            RateOfFire = 250;
             RateOfMissileFire = 500;
             TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
             TillNextMissile = new TimeSpan(0, 0, 0, 0, RateOfMissileFire);

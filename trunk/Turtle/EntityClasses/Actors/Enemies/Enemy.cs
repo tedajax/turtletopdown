@@ -12,7 +12,6 @@ namespace Turtle
         Sprite EnemySprite;
 
         int deathState; //0 alive, 1 dieing, 2 set the destroy to true
-        bool destroy;
 
         Disintegrate enemyDeath;
 
@@ -84,16 +83,11 @@ namespace Turtle
             if (deathState == 0)
             {
                 deathState = 1;
-                enemyDeath = new Disintegrate(EnemySprite.GetImage(), Position, 4);
+                enemyDeath = new Disintegrate(EnemySprite.GetImage(), Position, 8);
                 enemyDeath.ParticleColor = EnemySprite.SColor;
                 this.Type = actorType.Misc;
+                SolidObject = false;
             }
-        }
-
-        public bool Destroy
-        {
-            get { return destroy; }
-            set { destroy = value; }
         }
 
         public override void Collision(Actor gameActor)

@@ -13,6 +13,7 @@ namespace Turtle
     class Chaser : Enemy
     {
         float speed;
+        float maxspeed;
 
         Vector2 targetVector;
         bool lockedOn;
@@ -33,30 +34,15 @@ namespace Turtle
 
             Moderator.toAdd.Push(this);
 
-            speed = 5.5f;
+            speed = 0f;
+            maxspeed = 5.5f;
 
             targetVector = Vector2.Zero;
             lockedOn = false;
 
             deathState = 0;
-        }
 
-        protected override void FindCollisions()
-        {
-            foreach (GridSquare g in gridSquares)
-            {
-                foreach (Actor a in g.Actors)
-                {
-                    if (a.getType() == actorType.Bullet)
-                    {
-                        if (a.CollidesWith(this))
-                        {
-                            KillEnemy();
-                            a.Collision(this);
-                        }
-                    }
-                }
-            }
+            Health = 20;
         }
 
         public override void Update(GameTime gameTime)
@@ -75,10 +61,12 @@ namespace Turtle
                 if (lockedOn)
                 {
                     Rotation = (float)Math.Atan2((targetVector.Y - Position.Y), (targetVector.X - Position.X));
-                    Velocity = new Vector2((float)Math.Cos(Rotation) * speed, (float)Math.Sin(Rotation) * speed);
+                    speed = MathHelper.Lerp(speed, maxspeed, 0.1f);
                 }
                 else
-                    Velocity = Vector2.Zero;
+                    speed = MathHelper.Lerp(speed, 0, 0.1f);
+                
+                Velocity = new Vector2((float)Math.Cos(Rotation) * speed, (float)Math.Sin(Rotation) * speed);
 
                 Position += Velocity;
 

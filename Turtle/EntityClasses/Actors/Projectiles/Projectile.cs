@@ -22,6 +22,8 @@ namespace Turtle
             
             projectileLife = new TimeSpan(0, 0, 0);
 
+            Damage = 1;
+
             SolidObject = true;
 
             InitCollLists();
@@ -40,6 +42,8 @@ namespace Turtle
             Velocity = vel;
             Rotation = rot;
             projectileLife = new TimeSpan(0, 0, 0, 0, msec);
+
+            Damage = 1;
 
             SolidObject = true;
 

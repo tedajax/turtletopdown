@@ -10,37 +10,30 @@ namespace Turtle
     class Enemy : Actor
     {
         protected Sprite EnemySprite;
-
         protected int deathState; //0 alive, 1 dieing, 2 set the destroy to true
-
         protected Disintegrate enemyDeath;
+
+        protected bool justHit; //set to true when hit, reset to false every update
 
         public Enemy()
         {
-            this.Type = actorType.Enemy;
-            //The base enemy will load the really retarded sprite I made
-            EnemySprite = new Sprite(BaseGame.GetContent().Load<Texture2D>("Images\\Enemies\\basicenemy"));
-
             Position = Vector2.Zero;
-            Origin = new Vector2(31, 31);
-
-            SolidObject = true;
-
-            InitCollLists();
-            CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 32));
-
-            EnemySprite.SetColor(new Color((byte)BaseGame.Rand.Next(256), (byte)BaseGame.Rand.Next(256), (byte)BaseGame.Rand.Next(256)));
-            Moderator.toAdd.Push(this);
+            Initialize();
         }
 
 
         public Enemy(Vector2 pos)
         {
+            Position = pos;
+            Initialize();
+        }
+
+        protected virtual void Initialize()
+        {
             this.Type = actorType.Enemy;
             //The base enemy will load the really retarded sprite I made
             EnemySprite = new Sprite(BaseGame.GetContent().Load<Texture2D>("Images\\Enemies\\basicenemy"));
 
-            Position = pos;
             Origin = new Vector2(31, 31);
 
             SolidObject = true;
@@ -50,10 +43,14 @@ namespace Turtle
 
             EnemySprite.SetColor(new Color((byte)BaseGame.Rand.Next(256), (byte)BaseGame.Rand.Next(256), (byte)BaseGame.Rand.Next(256)));
             Moderator.toAdd.Push(this);
+
+            Health = 20;
         }
 
         protected virtual void FindCollisions()
         {
+            justHit = false;
+
             foreach (GridSquare g in gridSquares)
             {
                 foreach (Actor a in g.Actors)
@@ -62,7 +59,12 @@ namespace Turtle
                     {
                         if (a.CollidesWith(this))
                         {
-                            KillEnemy();
+                            Health -= a.Damage;
+                            justHit = true;
+
+                            if (Health <= 0)
+                                KillEnemy();
+                            
                             a.Collision(this);
                         }
                     }
@@ -96,6 +98,11 @@ namespace Turtle
 
         public override void Draw()
         {
+            if (justHit)
+                EnemySprite.SColor = new Color(255, 255, 255, 127);
+            else
+                EnemySprite.SColor = Color.White;
+
             if (deathState == 0)
                 EnemySprite.Draw();
             else if (deathState == 1)

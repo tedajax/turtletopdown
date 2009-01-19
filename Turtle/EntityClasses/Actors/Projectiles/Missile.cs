@@ -38,7 +38,7 @@ namespace Turtle
             Rotation = rot;
 
             speed = 12f;
-            turnSpeed = 0.2f;
+            turnSpeed = 0.05f;
 
             tillLockOn = new TimeSpan(0, 0, 0, 0, 250);
 
@@ -55,6 +55,8 @@ namespace Turtle
 
             ActorSprite.Layer = 0.1f;
             targeting = new Detector(Position, 1000);
+
+            Damage = 5;
         }
 
         public override void Update(GameTime gameTime)

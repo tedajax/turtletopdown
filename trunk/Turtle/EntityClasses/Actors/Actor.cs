@@ -26,8 +26,11 @@ namespace Turtle
         /// This boolean will be set to true once the Actor has been disposed of by Moderator/CollisionManager
         /// </summary>
         protected bool isDisposed = false;
-
         protected bool destroy;
+
+        //Alright this is how much damage this actor does to another, mainly used with projectiles
+        protected int damage;
+        protected int health; //health of the actor
 
         /// <summary>
         /// Solid Object means that it will Fire collision events if Colliding with another object
@@ -49,8 +52,6 @@ namespace Turtle
         {
             gridSquares.Clear();
         }
-
-   
 
         protected void InitCollLists()
         {
@@ -168,5 +169,17 @@ namespace Turtle
 
         public Boolean Solid() { return SolidObject; }
         public void SetSolid(Boolean sol) { SolidObject = sol; }
+
+        public int Damage
+        {
+            get { return damage; }
+            set { damage = value; }
+        }
+
+        public int Health
+        {
+            get { return health; }
+            set { health = value; }
+        }
     }
 }

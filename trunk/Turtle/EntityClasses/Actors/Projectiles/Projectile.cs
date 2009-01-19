@@ -61,7 +61,7 @@ namespace Turtle
                 {
                     if (A.CollidesWith(this))
                     {
-                        if (A.getType() == actorType.Enemy || A.getType() == actorType.Environment)
+                        if (A.getType() == actorType.Environment)
                         {
                             this.Dispose();
                             destroy = true;

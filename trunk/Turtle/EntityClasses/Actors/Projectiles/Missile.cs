@@ -19,7 +19,7 @@ namespace Turtle
 
         float lockAccuracy;
 
-        TargetSystem targeting;
+        Detector targeting;
 
         /// <summary>
         /// Parameter free constructor
@@ -54,7 +54,7 @@ namespace Turtle
             projectileLife = new TimeSpan(0, 0, 2);
 
             ActorSprite.Layer = 0.1f;
-            targeting = new TargetSystem(Position, 1000);
+            targeting = new Detector(Position, 1000);
         }
 
         public override void Update(GameTime gameTime)
@@ -66,7 +66,7 @@ namespace Turtle
                 {
                     if (A.CollidesWith(this))
                     {
-                        if (A.getType() == actorType.Enemy || A.getType() == actorType.Environment)
+                        if (A.getType() == actorType.Environment)
                         {
                             destroy = true;
                             this.Dispose();

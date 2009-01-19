@@ -64,11 +64,12 @@
     <Compile Include="Collision\Manager\Collision.cs" />
     <Compile Include="Collision\Manager\CollisionManager.cs" />
     <Compile Include="EntityClasses\Actors\Actor.cs" />
+    <Compile Include="EntityClasses\Actors\Detector.cs" />
+    <Compile Include="EntityClasses\Actors\Enemies\Chaser.cs" />
     <Compile Include="EntityClasses\Actors\Enemies\Enemy.cs" />
     <Compile Include="EntityClasses\Actors\Player.cs" />
     <Compile Include="EntityClasses\Actors\Projectiles\Missile.cs" />
     <Compile Include="EntityClasses\Actors\Projectiles\Projectile.cs" />
-    <Compile Include="EntityClasses\Actors\Projectiles\TargetSystem.cs" />
     <Compile Include="EntityClasses\Actors\Target.cs" />
     <Compile Include="EntityClasses\Actors\VisibleActor.cs" />
     <Compile Include="EntityClasses\Actors\World Objects\SimpleWall.cs" />

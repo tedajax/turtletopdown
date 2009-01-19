@@ -31,6 +31,8 @@ namespace Turtle
 
         Background GameBG;
 
+        public static Vector2[] PlayerPositions;
+
         public GameWorld()
         {
            
@@ -41,6 +43,8 @@ namespace Turtle
             GameBG = new Background();
             Moderator.Initialize();
             Moderator.toAdd.Push(GamePlayers[0]);
+
+            PlayerPositions = new Vector2[GamePlayers.Count];
         }
 
         public void Update(GameTime gameTime)
@@ -49,6 +53,9 @@ namespace Turtle
             {
                 p.Update(gameTime);
             }
+
+            PlayerPositions[0] = GamePlayers[0].Position;
+
             Stack<Actor> disposal = new Stack<Actor>();
             foreach (Actor a in gameActors)
             {
@@ -89,8 +96,6 @@ namespace Turtle
         {
             this.gameActors.Add(gameActor);
         }
-
-
 
     }
 }

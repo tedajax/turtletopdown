@@ -9,11 +9,30 @@ namespace Turtle
 {
     class Enemy : Actor
     {
-        Sprite EnemySprite;
+        protected Sprite EnemySprite;
 
-        int deathState; //0 alive, 1 dieing, 2 set the destroy to true
+        protected int deathState; //0 alive, 1 dieing, 2 set the destroy to true
 
-        Disintegrate enemyDeath;
+        protected Disintegrate enemyDeath;
+
+        public Enemy()
+        {
+            this.Type = actorType.Enemy;
+            //The base enemy will load the really retarded sprite I made
+            EnemySprite = new Sprite(BaseGame.GetContent().Load<Texture2D>("Images\\Enemies\\basicenemy"));
+
+            Position = Vector2.Zero;
+            Origin = new Vector2(31, 31);
+
+            SolidObject = true;
+
+            InitCollLists();
+            CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 32));
+
+            EnemySprite.SetColor(new Color((byte)BaseGame.Rand.Next(256), (byte)BaseGame.Rand.Next(256), (byte)BaseGame.Rand.Next(256)));
+            Moderator.toAdd.Push(this);
+        }
+
 
         public Enemy(Vector2 pos)
         {
@@ -33,7 +52,7 @@ namespace Turtle
             Moderator.toAdd.Push(this);
         }
 
-        public override void Update(GameTime gameTime)
+        protected virtual void FindCollisions()
         {
             foreach (GridSquare g in gridSquares)
             {
@@ -49,7 +68,12 @@ namespace Turtle
                     }
                 }
             }
+        }
 
+        public override void Update(GameTime gameTime)
+        {
+            FindCollisions();
+            
             if (deathState == 0)
             {
                 //make the enemy just spin in circles
@@ -78,7 +102,7 @@ namespace Turtle
                 enemyDeath.Draw();
         }
 
-        public void KillEnemy()
+        public virtual void KillEnemy()
         {
             if (deathState == 0)
             {
@@ -93,7 +117,6 @@ namespace Turtle
         public override void Collision(Actor gameActor)
         {
             KillEnemy();
-            
         }
     }
 }

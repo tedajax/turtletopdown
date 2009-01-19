@@ -13,7 +13,6 @@ namespace Turtle
         protected TimeSpan projectileLife;
 
         //if true the projectile manager will remove this bullet
-        protected bool destroy;
         
         public Projectile()
         {
@@ -88,10 +87,9 @@ namespace Turtle
             }
         }
 
-        public bool Destroy
+        public override void Collision(Actor gameActor)
         {
-            get { return destroy; }
-            set { destroy = value; }
+            destroy = true;
         }
     }
 }

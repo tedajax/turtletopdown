@@ -12,7 +12,7 @@ namespace Turtle
         Enemy,
         Environment,
         Misc,
-        Targeting
+        Detector
     }
 
 

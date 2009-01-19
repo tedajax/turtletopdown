@@ -1,0 +1,113 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace Turtle
+{
+    /// <summary>
+    /// Moves towards the player no matter what, slightly faster than the player can move
+    /// </summary>
+    class Chaser : Enemy
+    {
+        float speed;
+
+        Vector2 targetVector;
+        bool lockedOn;
+
+        public Chaser(Vector2 pos)
+        {
+            this.Type = actorType.Enemy;
+
+            EnemySprite = new Sprite(BaseGame.GetContent().Load<Texture2D>("Images\\Enemies\\circle"));
+
+            Position = pos;
+            Origin = new Vector2(31, 31);
+
+            SolidObject = true;
+
+            InitCollLists();
+            CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 27));
+
+            Moderator.toAdd.Push(this);
+
+            speed = 5.5f;
+
+            targetVector = Vector2.Zero;
+            lockedOn = false;
+
+            deathState = 0;
+        }
+
+        protected override void FindCollisions()
+        {
+            foreach (GridSquare g in gridSquares)
+            {
+                foreach (Actor a in g.Actors)
+                {
+                    if (a.getType() == actorType.Bullet)
+                    {
+                        if (a.CollidesWith(this))
+                        {
+                            KillEnemy();
+                            a.Collision(this);
+                        }
+                    }
+                }
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            FindCollisions();
+
+            if (deathState == 0)
+            {
+                targetVector = GameWorld.PlayerPositions[0];
+
+                if (Vector2.DistanceSquared(Position, targetVector) < 250000)
+                    lockedOn = true;
+                else
+                    lockedOn = false;
+
+                if (lockedOn)
+                {
+                    Rotation = (float)Math.Atan2((targetVector.Y - Position.Y), (targetVector.X - Position.X));
+                    Velocity = new Vector2((float)Math.Cos(Rotation) * speed, (float)Math.Sin(Rotation) * speed);
+                }
+                else
+                    Velocity = Vector2.Zero;
+
+                Position += Velocity;
+
+                Moderator.HasMoved(this);
+            }
+            else if (deathState == 1)
+            {
+                enemyDeath.Update(gameTime);
+                if (enemyDeath.Destroy)
+                {
+                    destroy = true;
+                    Moderator.toRemove.Push(this);
+                    deathState = 3;
+                }
+            }
+
+            EnemySprite.SetPosition(Position);
+        }
+
+        public override void KillEnemy()
+        {
+            if (deathState == 0)
+            {
+                deathState = 1;
+                enemyDeath = new Disintegrate(EnemySprite.GetImage(), Position, 8);
+                enemyDeath.ParticleColor = EnemySprite.SColor;
+                this.Type = actorType.Misc;
+                SolidObject = false;
+            }
+        }
+    }
+}

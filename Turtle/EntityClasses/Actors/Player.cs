@@ -77,12 +77,12 @@ namespace Turtle
 
             PlayerProjectiles = new ProjectileManager();
 
-            RateOfFire = 250;
+            RateOfFire = 50;
             RateOfMissileFire = 500;
             TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
             TillNextMissile = new TimeSpan(0, 0, 0, 0, RateOfMissileFire);
 
-           // this.CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 32));
+            // this.CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 32));
             this.CollisionBoxes.Add(new BoundingRectangle(Vector2.Zero, new Vector2(64,64)));
             this.SolidObject = true;
         }
@@ -207,7 +207,7 @@ namespace Turtle
             {
                 Vector2 projPos = new Vector2(32 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2) + Position.X, 32 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2) + Position.Y);
                 Vector2 projVel = new Vector2(16 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2), 16 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2));
-                PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 3000));
+                PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 1000));
 
                 TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
             }

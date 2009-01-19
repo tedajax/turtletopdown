@@ -92,8 +92,9 @@
     <Compile Include="Collision\Manager\Collision.cs" />
     <Compile Include="Collision\Manager\CollisionManager.cs" />
     <Compile Include="EntityClasses\Actors\Actor.cs" />
+    <Compile Include="EntityClasses\Actors\Detector.cs" />
+    <Compile Include="EntityClasses\Actors\Enemies\Chaser.cs" />
     <Compile Include="EntityClasses\Actors\Enemies\Enemy.cs" />
-    <Compile Include="EntityClasses\Actors\Projectiles\TargetSystem.cs" />
     <Compile Include="EntityClasses\Actors\World Objects\SimpleWall.cs" />
     <Compile Include="EntityClasses\Particles\Disintegrate.cs" />
     <Compile Include="EntityClasses\Particles\Particle.cs" />

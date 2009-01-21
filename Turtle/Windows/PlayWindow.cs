@@ -27,7 +27,7 @@ namespace Turtle
             //make 50 enemies spread them out across the level in random spots
             gameWorld = new GameWorld();
             SomeEnemies = new List<Enemy>();
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 500; i++)
             {
                 SomeEnemies.Add(new Chaser(BaseGame.randomPoint(-1920, 1920)));
             }

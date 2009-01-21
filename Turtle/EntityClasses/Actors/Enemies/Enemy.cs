@@ -15,7 +15,8 @@ namespace Turtle
 
         protected bool justHit; //set to true when hit, reset to false every update
 
-        protected bool wallCollision;
+        protected bool wallCollision; //currently colliding with wall
+        protected bool collInertia; //moving from collision with moving object
 
         public Enemy()
         {
@@ -55,7 +56,7 @@ namespace Turtle
         {
             justHit = false;
             wallCollision = false;
-
+            
             foreach (GridSquare g in gridSquares)
             {
                 foreach (Actor a in g.Actors)
@@ -78,6 +79,7 @@ namespace Turtle
                         if (a.CollidesWith(this))
                         {
                             wallCollision = true;
+                            collInertia = true;
                             Vector2 newVector = a.GetPosition() - this.Position;
                             newVector.Normalize();
                             this.Velocity = 1 * Vector2.Negate(newVector) + a.Velocity;
@@ -96,6 +98,9 @@ namespace Turtle
                 //make the enemy just spin in circles
                 Rotation += MathHelper.Pi / 16;
                 Rotation = BaseGame.WrapValueRadian(Rotation);
+
+                if (Math.Abs(VelocityX) < 1f && Math.Abs(VelocityY) < 1f && collInertia)
+                    collInertia = false;
             }
             else if (deathState == 1)
             {

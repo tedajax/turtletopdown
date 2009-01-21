@@ -33,7 +33,7 @@ namespace Turtle
             }
 
 
-            gameWorld.addActor(new PatrolWall(BaseGame.GetContent().Load<Texture2D>("Images\\Background\\walltile"), new Vector2(640, 480), new Vector2(940, 80)));
+            gameWorld.addActor(new PatrolWall(BaseGame.GetContent().Load<Texture2D>("Images\\Background\\walltile"), new Vector2(640, 480), new Vector2(940, 80), 0.02f));
         }
 
         protected override void Initialize()

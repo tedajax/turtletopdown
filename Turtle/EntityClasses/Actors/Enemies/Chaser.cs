@@ -35,7 +35,7 @@ namespace Turtle
             Moderator.toAdd.Push(this);
 
             speed = 0f;
-            maxspeed = 5.5f;
+            maxspeed = 3f;
 
             targetVector = Vector2.Zero;
             lockedOn = false;

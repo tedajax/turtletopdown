@@ -15,6 +15,8 @@ namespace Turtle
 
         protected bool justHit; //set to true when hit, reset to false every update
 
+        protected bool wallCollision;
+
         public Enemy()
         {
             Position = Vector2.Zero;
@@ -45,11 +47,14 @@ namespace Turtle
             Moderator.toAdd.Push(this);
 
             Health = 20;
+
+            wallCollision = false;
         }
 
         protected virtual void FindCollisions()
         {
             justHit = false;
+            wallCollision = false;
 
             foreach (GridSquare g in gridSquares)
             {
@@ -66,6 +71,16 @@ namespace Turtle
                                 KillEnemy();
                             
                             a.Collision(this);
+                        }
+                    }
+                    else if (a.getType() == actorType.Environment)
+                    {
+                        if (a.CollidesWith(this))
+                        {
+                            wallCollision = true;
+                            Vector2 newVector = a.GetPosition() - this.Position;
+                            newVector.Normalize();
+                            this.Velocity = 1 * Vector2.Negate(newVector) + a.Velocity;
                         }
                     }
                 }

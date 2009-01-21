@@ -38,12 +38,12 @@ namespace Turtle
 
         public override void Update(GameTime gameTime)
         {
-            VelocityX += 0.01f;
-
-            Position += Velocity;
-            if (Velocity != Vector2.Zero)
-                Moderator.HasMoved(this);
-            ActorSprite.SetPosition(Position);
+            /*
+             * IMPORTANT:
+             *   Any moving wall you create must set velocity somewhere if other actors are expected to react to the collision properly
+             *   Players and Enemies use the velocity of the wall to determine how to be pushed properly
+             *   If you do not use velocity for movement I suggest just simply subtracting the old position from the current position and setting that
+             */
         }
     }
 }

@@ -38,7 +38,12 @@ namespace Turtle
 
         public override void Update(GameTime gameTime)
         {
+            VelocityX += 0.01f;
 
+            Position += Velocity;
+            if (Velocity != Vector2.Zero)
+                Moderator.HasMoved(this);
+            ActorSprite.SetPosition(Position);
         }
     }
 }

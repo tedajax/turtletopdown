@@ -38,7 +38,7 @@ namespace Turtle
             Rotation = rot;
 
             speed = 12f;
-            turnSpeed = 0.05f;
+            turnSpeed = 0.1f;
 
             tillLockOn = new TimeSpan(0, 0, 0, 0, 250);
 

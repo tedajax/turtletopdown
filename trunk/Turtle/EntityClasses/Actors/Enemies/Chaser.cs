@@ -66,8 +66,16 @@ namespace Turtle
                 else
                     speed = MathHelper.Lerp(speed, 0, 0.1f);
                 
-                if (!wallCollision)
+                if (!wallCollision && !collInertia)
                     Velocity = new Vector2((float)Math.Cos(Rotation) * speed, (float)Math.Sin(Rotation) * speed);
+
+                if (collInertia)
+                {
+                    Velocity *= .9f;
+
+                    if (Math.Abs(VelocityX) < 1f && Math.Abs(VelocityY) < 1f)
+                        collInertia = false;
+                }
 
                 Position += Velocity;
 

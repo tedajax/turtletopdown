@@ -18,6 +18,8 @@ namespace Turtle
         Vector2 LerpPos;
         bool direction; //true - go to end position, false go to start position
 
+        float speed;
+
         Vector2 OldPos;
 
         /// <summary>
@@ -27,13 +29,15 @@ namespace Turtle
         /// <param name="spos">Starting position</param>
         /// <param name="epos">Ending position, will cycle between both positions</param>
         /// <param name="spd">Speed at which the wall patrols</param>
-        public PatrolWall(Texture2D img, Vector2 spos, Vector2 epos)
+        public PatrolWall(Texture2D img, Vector2 spos, Vector2 epos, float spd)
         {
             ActorSprite = new Sprite(img);
 
             Position = spos;
             StartPos = spos;
             EndPos = epos;
+
+            speed = spd;
 
             direction = true;
 
@@ -58,14 +62,14 @@ namespace Turtle
 
             if (direction)
             {
-                LerpPos += Vector2.One * 0.01f;
+                LerpPos += Vector2.One * speed;
 
                 if (LerpPos.X >= 1)
                     direction = !direction;
             }
             else
             {
-                LerpPos -= Vector2.One * 0.01f;
+                LerpPos -= Vector2.One * speed;
 
                 if (LerpPos.X <= 0)
                     direction = !direction;

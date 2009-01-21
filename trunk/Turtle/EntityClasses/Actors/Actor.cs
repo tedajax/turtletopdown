@@ -15,7 +15,6 @@ namespace Turtle
         Detector
     }
 
-
     public abstract class Actor : Entity
     {
         protected List<BoundingRectangle> CollisionBoxes;
@@ -181,5 +180,6 @@ namespace Turtle
             get { return health; }
             set { health = value; }
         }
+
     }
 }

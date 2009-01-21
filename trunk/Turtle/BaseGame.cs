@@ -59,7 +59,7 @@ namespace Turtle
             graphics.PreferredBackBufferHeight = GameRes.GetResY();
 
             Content.RootDirectory = "Content";
-            ContMan = Content;
+            ContMan = Content; 
 
             rand = new Random();
                         

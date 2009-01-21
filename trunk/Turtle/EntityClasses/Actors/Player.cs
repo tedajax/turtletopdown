@@ -100,10 +100,9 @@ namespace Turtle
                     {
                         if (A.CollidesWith(this))
                         {
-                         
                             Vector2 newVector = A.GetPosition() - this.Position;
                             newVector.Normalize();
-                            this.Velocity = 3 * Vector2.Negate(newVector);
+                            this.Velocity = 1 * Vector2.Negate(newVector) + A.Velocity;
                         }
                     }
                 }

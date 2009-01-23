@@ -9,6 +9,7 @@ namespace Turtle
     {
         Player,
         Bullet,
+        Photon,
         Enemy,
         Environment,
         Misc,
@@ -180,6 +181,5 @@ namespace Turtle
             get { return health; }
             set { health = value; }
         }
-
     }
 }

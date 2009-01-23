@@ -95,6 +95,7 @@ namespace Turtle
 
             GameInput.UpdateNewInput();
             GameInput.UpdateNewPadInput(PlayerOneIndex);
+            GameInput.UpdateNewMouseInput();
 
             if (quit || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.Back))
                 this.Exit();
@@ -103,6 +104,7 @@ namespace Turtle
 
             GameInput.UpdateOldInput();
             GameInput.UpdateOldPadInput(PlayerOneIndex);
+            GameInput.UpdateOldMouseInput();
 
             base.Update(gameTime);
         }

@@ -42,7 +42,9 @@ namespace Turtle
 
             deathState = 0;
 
-            Health = 20;
+            Health = 10;
+            targeted = false;
+            LoadTargetedSprite();
         }
 
         public override void Update(GameTime gameTime)
@@ -78,6 +80,8 @@ namespace Turtle
                 }
 
                 Position += Velocity;
+
+                UpdateTargeted();
 
                 Moderator.HasMoved(this);
             }

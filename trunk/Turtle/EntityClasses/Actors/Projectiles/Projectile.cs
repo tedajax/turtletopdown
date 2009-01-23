@@ -22,7 +22,7 @@ namespace Turtle
             
             projectileLife = new TimeSpan(0, 0, 0);
 
-            Damage = 1;
+            Damage = 5;
 
             SolidObject = true;
 
@@ -43,7 +43,7 @@ namespace Turtle
             Rotation = rot;
             projectileLife = new TimeSpan(0, 0, 0, 0, msec);
 
-            Damage = 1;
+            Damage = 5;
 
             SolidObject = true;
 

@@ -67,8 +67,10 @@
     <Compile Include="EntityClasses\Actors\Detector.cs" />
     <Compile Include="EntityClasses\Actors\Enemies\Chaser.cs" />
     <Compile Include="EntityClasses\Actors\Enemies\Enemy.cs" />
+    <Compile Include="EntityClasses\Actors\LockOnTarget.cs" />
     <Compile Include="EntityClasses\Actors\Player.cs" />
     <Compile Include="EntityClasses\Actors\Projectiles\Missile.cs" />
+    <Compile Include="EntityClasses\Actors\Projectiles\Photon.cs" />
     <Compile Include="EntityClasses\Actors\Projectiles\Projectile.cs" />
     <Compile Include="EntityClasses\Actors\Target.cs" />
     <Compile Include="EntityClasses\Actors\VisibleActor.cs" />

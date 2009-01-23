@@ -31,7 +31,6 @@ namespace Turtle
         public static Stack<Actor> Disposed;
 
 
-
         /// <summary>
         /// This method (re)Initailizes the Moderator, clearing any Types that may contain old data
         /// </summary>
@@ -56,11 +55,5 @@ namespace Turtle
             toRemove.Push(gameActor);
             Disposed.Push(gameActor);
         }
-
-
-
-       
-
-
     }
 }

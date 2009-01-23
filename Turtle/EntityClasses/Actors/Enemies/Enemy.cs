@@ -18,6 +18,9 @@ namespace Turtle
         protected bool wallCollision; //currently colliding with wall
         protected bool collInertia; //moving from collision with moving object
 
+        protected bool targeted;
+        protected Sprite targetedSprite;
+
         public Enemy()
         {
             Position = Vector2.Zero;
@@ -47,9 +50,19 @@ namespace Turtle
             EnemySprite.SetColor(new Color((byte)BaseGame.Rand.Next(256), (byte)BaseGame.Rand.Next(256), (byte)BaseGame.Rand.Next(256)));
             Moderator.toAdd.Push(this);
 
-            Health = 20;
+            Health = 10;
 
             wallCollision = false;
+
+            targeted = false;
+            LoadTargetedSprite();
+        }
+
+        protected virtual void LoadTargetedSprite()
+        {
+            targetedSprite = new Sprite(BaseGame.GetContent().Load<Texture2D>("Images\\targeted"));
+            targetedSprite.Scale = Vector2.One * 2f;
+            targetedSprite.SetHidden(true);
         }
 
         protected virtual void FindCollisions()
@@ -61,7 +74,7 @@ namespace Turtle
             {
                 foreach (Actor a in g.Actors)
                 {
-                    if (a.getType() == actorType.Bullet)
+                    if (a.getType() == actorType.Bullet || a.getType() == actorType.Photon)
                     {
                         if (a.CollidesWith(this))
                         {
@@ -101,6 +114,8 @@ namespace Turtle
 
                 if (Math.Abs(VelocityX) < 1f && Math.Abs(VelocityY) < 1f && collInertia)
                     collInertia = false;
+
+                UpdateTargeted();
             }
             else if (deathState == 1)
             {
@@ -116,6 +131,23 @@ namespace Turtle
             EnemySprite.SetRotation(Rotation);
         }
 
+        protected virtual void UpdateTargeted()
+        {
+            if (targeted)
+            {
+                targetedSprite.SetPosition(Position);
+                if (targetedSprite.ScaleX > 1)
+                    targetedSprite.Scale = new Vector2(targetedSprite.ScaleX - 0.1f, targetedSprite.ScaleY - 0.1f);
+
+                targetedSprite.SetHidden(false);
+            }
+            else
+            {
+                targetedSprite.Scale = Vector2.One * 2;
+                targetedSprite.SetHidden(true);
+            }
+        }
+
         public override void Draw()
         {
             if (justHit)
@@ -124,7 +156,10 @@ namespace Turtle
                 EnemySprite.SColor = Color.White;
 
             if (deathState == 0)
+            {
                 EnemySprite.Draw();
+                targetedSprite.Draw();
+            }
             else if (deathState == 1)
                 enemyDeath.Draw();
         }
@@ -144,6 +179,12 @@ namespace Turtle
         public override void Collision(Actor gameActor)
         {
             KillEnemy();
+        }
+
+        public bool Targeted
+        {
+            get { return targeted; }
+            set { targeted = value; }
         }
     }
 }

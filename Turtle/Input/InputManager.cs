@@ -36,6 +36,14 @@ namespace Turtle
         Up
     }
 
+    public enum MousePressedState
+    {
+        Pressed,
+        Released,
+        JustPressed,
+        JustReleased
+    }
+
     public class InputManager
     {        
         private KeyboardState NewKeyState;
@@ -44,6 +52,9 @@ namespace Turtle
         private GamePadState NewGamePadState;
         private GamePadState OldGamePadState;
 
+        private MouseState OldMouseState;
+        private MouseState NewMouseState;
+
         public InputManager()
         {
             NewKeyState = new KeyboardState();
@@ -51,6 +62,9 @@ namespace Turtle
 
             NewGamePadState = new GamePadState();
             OldGamePadState = new GamePadState();
+
+            NewMouseState = new MouseState();
+            OldMouseState = new MouseState();
         }
 
         public KeyPressedState GetKeyPressedState(Keys input)
@@ -86,6 +100,42 @@ namespace Turtle
                     return GamePadButtonState.JustReleased;
                 else
                     return GamePadButtonState.Released;
+            }
+        }
+
+        public MousePressedState GetMouseLeft()
+        {
+            if (NewMouseState.LeftButton == ButtonState.Pressed)
+            {
+                if (OldMouseState.LeftButton == ButtonState.Pressed)
+                    return MousePressedState.Pressed;
+                else
+                    return MousePressedState.JustPressed;
+            }
+            else
+            {
+                if (OldMouseState.LeftButton == ButtonState.Pressed)
+                    return MousePressedState.JustReleased;
+                else
+                    return MousePressedState.Released;
+            }
+        }
+
+        public MousePressedState GetMouseRight()
+        {
+            if (NewMouseState.RightButton == ButtonState.Pressed)
+            {
+                if (OldMouseState.RightButton == ButtonState.Pressed)
+                    return MousePressedState.Pressed;
+                else
+                    return MousePressedState.JustPressed;
+            }
+            else
+            {
+                if (OldMouseState.RightButton == ButtonState.Pressed)
+                    return MousePressedState.JustReleased;
+                else
+                    return MousePressedState.Released;
             }
         }
 
@@ -239,5 +289,7 @@ namespace Turtle
         public void UpdateOldInput() { OldKeyState = Keyboard.GetState(); }
         public void UpdateNewPadInput(PlayerIndex p) { NewGamePadState = GamePad.GetState(p); }
         public void UpdateOldPadInput(PlayerIndex p) { OldGamePadState = GamePad.GetState(p); }
+        public void UpdateNewMouseInput() { NewMouseState = Mouse.GetState(); }
+        public void UpdateOldMouseInput() { OldMouseState = Mouse.GetState(); }
     }
 }

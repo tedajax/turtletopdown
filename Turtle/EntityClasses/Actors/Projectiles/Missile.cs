@@ -56,7 +56,7 @@ namespace Turtle
             ActorSprite.Layer = 0.1f;
             targeting = new Detector(Position, 1000);
 
-            Damage = 5;
+            Damage = 10;
         }
 
         public override void Update(GameTime gameTime)

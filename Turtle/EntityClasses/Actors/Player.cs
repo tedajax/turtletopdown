@@ -22,6 +22,12 @@ namespace Turtle
         Uranium
     }
 
+    enum BulletMode
+    {
+        Standard,
+        Photon
+    }
+
     class Player : VisibleActor
     {
         //Stats
@@ -42,13 +48,16 @@ namespace Turtle
         byte Shield;*/
 
         Target target;
+        LockOnTarget photontarget;
 
         PlayerIndex plIndex;
 
         //Oh shit the player has their own projectile manager, we're getting fancy now
         ProjectileManager PlayerProjectiles;
 
-     
+        BulletMode PlayerBulletMode;
+
+        Queue<Enemy> PhotonQueue;
 
         public Player()
         {
@@ -74,6 +83,7 @@ namespace Turtle
             Position = new Vector2(640, 360);
 
             target = new Target();
+            photontarget = new LockOnTarget();
 
             PlayerProjectiles = new ProjectileManager();
 
@@ -85,6 +95,10 @@ namespace Turtle
             // this.CollisionCircles.Add(new BoundingCircle(Vector2.Zero, 32));
             this.CollisionBoxes.Add(new BoundingRectangle(Vector2.Zero, new Vector2(64,64)));
             this.SolidObject = true;
+
+            PlayerBulletMode = BulletMode.Photon;
+
+            PhotonQueue = new Queue<Enemy>();
         }
 
         public override void Update(GameTime gameTime)
@@ -111,9 +125,22 @@ namespace Turtle
             TillNextShot -= gameTime.ElapsedGameTime;
             TillNextMissile -= gameTime.ElapsedGameTime;
 
+            if (PhotonQueue.Count > 0)
+            {
+                Photon newPhoton = new Photon(Position, PhotonQueue.Dequeue());
+                newPhoton.Rotation = Rotation - MathHelper.PiOver2;
+                PlayerProjectiles.Add(newPhoton);
+            }
+
             Controls();
 
             target.Update(gameTime);
+            if (PlayerBulletMode == BulletMode.Photon)
+            {
+                photontarget.Position = target.Position;
+                photontarget.Update(gameTime);
+            }
+
             PlayerProjectiles.Update(gameTime);
 
             Position += Velocity;
@@ -127,13 +154,33 @@ namespace Turtle
         {
            // PlayerProjectiles.Draw();
             ActorSprite.Draw();
-            target.Draw();
+            if (PlayerBulletMode == BulletMode.Standard)
+            {
+                target.Draw();
+                photontarget.SetHidden(true);
+            }
+            else
+            {
+                photontarget.Draw();
+                photontarget.SetHidden(false);
+            }
         }
 
         private void Controls()
         {
             #if WINDOWS
-                
+            
+                if (BaseGame.Input.GetKeyPressedState(Keys.LeftControl) == KeyPressedState.JustPressed)
+                {
+                    switch (PlayerBulletMode)
+                    {
+                        case BulletMode.Standard: PlayerBulletMode = BulletMode.Photon;
+                            break;
+                        case BulletMode.Photon: PlayerBulletMode = BulletMode.Standard;
+                            break;
+                    }
+                }
+
                 //up/down movement
                 if (BaseGame.Input.GetKeyPressedState(Keys.W) == KeyPressedState.Pressed)
                 {
@@ -168,12 +215,10 @@ namespace Turtle
                 Rotation = (float)Math.Atan2(mdifpy, mdifpx) + MathHelper.PiOver2; // get the angle between the two points
                 Rotation = BaseGame.WrapValueRadian(Rotation); //contstrain it to between 0 and 2pi
                 
-                //Shooting with LMB (left mouse button)
-                if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-                {
-                    Shooting();
-                }
-            
+                Shooting();
+
+                
+
             #elif XBOX
                 VelocityX = MathHelper.Lerp(Velocity.X, GamePad.GetState(plIndex).ThumbSticks.Left.X * MaxSpeed, 0.1f); //set the velocity based on the left thumbstick position
                 VelocityY = MathHelper.Lerp(Velocity.Y, -GamePad.GetState(plIndex).ThumbSticks.Left.Y * MaxSpeed, 0.1f);
@@ -202,28 +247,51 @@ namespace Turtle
 
         private void Shooting()
         {
-            if (TillNextShot.TotalMilliseconds <= 0)
+            if (PlayerBulletMode == BulletMode.Standard && Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                Vector2 projPos = new Vector2(32 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2) + Position.X, 32 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2) + Position.Y);
-                Vector2 projVel = new Vector2(16 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2), 16 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2));
-                PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 1000));
-
-                TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
-            }
-
-            if (TillNextMissile.TotalMilliseconds <= 0)
-            {
-                int rad = 16;
-
-                for (int posMult = 1; posMult <= 1; posMult++)
+                if (TillNextShot.TotalMilliseconds <= 0)
                 {
-                    int dist = rad * posMult;
+                    Vector2 projPos = new Vector2(32 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2) + Position.X, 32 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2) + Position.Y);
+                    Vector2 projVel = new Vector2(16 * (float)Math.Cos((double)Rotation - MathHelper.PiOver2), 16 * (float)Math.Sin((double)Rotation - MathHelper.PiOver2));
+                    PlayerProjectiles.Add(new Projectile(projPos, projVel, Rotation, 1000));
 
-                    PlayerProjectiles.Add(new Missile(Position + new Vector2((float)Math.Cos(Rotation) * dist, (float)Math.Sin(Rotation) * dist), Rotation - MathHelper.PiOver2));
-                    PlayerProjectiles.Add(new Missile(Position + new Vector2((float)Math.Cos(Rotation - MathHelper.Pi) * dist, (float)Math.Sin(Rotation - MathHelper.Pi) * dist), Rotation - MathHelper.PiOver2));
+                    TillNextShot = new TimeSpan(0, 0, 0, 0, RateOfFire);
                 }
 
-                TillNextMissile = new TimeSpan(0, 0, 0, 0, RateOfMissileFire);
+                if (TillNextMissile.TotalMilliseconds <= 0)
+                {
+                    int rad = 16;
+
+                    for (int posMult = 1; posMult <= 1; posMult++)
+                    {
+                        int dist = rad * posMult;
+
+                        PlayerProjectiles.Add(new Missile(Position + new Vector2((float)Math.Cos(Rotation) * dist, (float)Math.Sin(Rotation) * dist), Rotation - MathHelper.PiOver2));
+                        PlayerProjectiles.Add(new Missile(Position + new Vector2((float)Math.Cos(Rotation - MathHelper.Pi) * dist, (float)Math.Sin(Rotation - MathHelper.Pi) * dist), Rotation - MathHelper.PiOver2));
+                    }
+
+                    TillNextMissile = new TimeSpan(0, 0, 0, 0, RateOfMissileFire);
+                }
+            }
+            else if (PlayerBulletMode == BulletMode.Photon)
+            {
+                if (BaseGame.Input.GetMouseLeft() == MousePressedState.Pressed)
+                {
+                    photontarget.Lock();                    
+                }
+                
+                if (BaseGame.Input.GetMouseLeft() == MousePressedState.Released)
+                {
+                    if (photontarget.GetTargetList().Count > 0)
+                    {
+                        foreach (Enemy e in photontarget.GetTargetList())
+                        {
+                            e.Targeted = false;
+                            PhotonQueue.Enqueue(e);
+                        }
+                        photontarget.ClearTargets();
+                    }
+                }
             }
         }
 
@@ -231,7 +299,7 @@ namespace Turtle
         {
             if (gameActor.getType() == actorType.Environment)
             {
-               
+                
             }
         }
 

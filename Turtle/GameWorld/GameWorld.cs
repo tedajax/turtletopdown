@@ -39,9 +39,10 @@ namespace Turtle
             GamePlayers = new List<Player>();
             gameActors = new List<Actor>();
             CollisionManager = new CollisionManager(500);
-            GamePlayers.Add(new Player());
             GameBG = new Background();
             Moderator.Initialize();
+
+            GamePlayers.Add(new Player());
             Moderator.toAdd.Push(GamePlayers[0]);
 
             PlayerPositions = new Vector2[GamePlayers.Count];
@@ -70,7 +71,7 @@ namespace Turtle
             }
 
             CollisionManager.Update(true);
-            BaseGame.Camera.Position = Vector2.Lerp(BaseGame.Camera.Position, GamePlayers[0].Position - new Vector2(640, 360), 0.06f);
+            BaseGame.Camera.Position = Vector2.Lerp(BaseGame.Camera.Position, GamePlayers[0].Position - new Vector2(640, 360), 0.1f);
 
         }
 

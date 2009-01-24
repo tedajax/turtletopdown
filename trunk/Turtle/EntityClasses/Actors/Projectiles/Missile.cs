@@ -54,7 +54,7 @@ namespace Turtle
             projectileLife = new TimeSpan(0, 0, 2);
 
             ActorSprite.Layer = 0.1f;
-            targeting = new Detector(Position, 1000);
+            targeting = new Detector(Position, 750);
 
             Damage = 10;
         }

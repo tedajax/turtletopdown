@@ -50,6 +50,8 @@ namespace Turtle
 
         public void Update(GameTime gameTime)
         {
+            GameBG.Update(gameTime);
+
             foreach (Player p in GamePlayers)
             {
                 p.Update(gameTime);

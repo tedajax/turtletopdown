@@ -63,8 +63,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Images\Background\sand.png">
-      <Name>sand</Name>
+    <Compile Include="Images\Background\spacecloud.png">
+      <Name>spacecloud</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -114,6 +114,13 @@
   <ItemGroup>
     <Compile Include="Images\Projectiles\photonshot.png">
       <Name>photonshot</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\Background\sand.png">
+      <Name>sand</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

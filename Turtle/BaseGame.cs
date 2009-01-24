@@ -91,7 +91,7 @@ namespace Turtle
 
         protected override void Update(GameTime gameTime)
         {
-            Graphics.Clear(Color.White);
+            Graphics.Clear(Color.Black);
 
             GameInput.UpdateNewInput();
             GameInput.UpdateNewPadInput(PlayerOneIndex);

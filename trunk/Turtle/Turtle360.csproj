@@ -63,6 +63,7 @@
     <Compile Include="Collision\BoundingObjects\BoundingRectangle.cs" />
     <Compile Include="Collision\Manager\Collision.cs" />
     <Compile Include="Collision\Manager\CollisionManager.cs" />
+    <Compile Include="Data Classes\BasicShip.cs" />
     <Compile Include="EntityClasses\Actors\Actor.cs" />
     <Compile Include="EntityClasses\Actors\Detector.cs" />
     <Compile Include="EntityClasses\Actors\Enemies\Chaser.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="ProjectileManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="EntityClasses\Weapons\Weapon.cs" />
     <Compile Include="Windows\PlayWindow.cs" />
     <Compile Include="Windows\Window.cs" />
     <Compile Include="Windows\WindowManager.cs" />

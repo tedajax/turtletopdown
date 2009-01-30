@@ -91,6 +91,7 @@
     <Compile Include="Collision\BoundingObjects\BoundingRectangle.cs" />
     <Compile Include="Collision\Manager\Collision.cs" />
     <Compile Include="Collision\Manager\CollisionManager.cs" />
+    <Compile Include="Data Classes\BasicShip.cs" />
     <Compile Include="EntityClasses\Actors\Actor.cs" />
     <Compile Include="EntityClasses\Actors\Detector.cs" />
     <Compile Include="EntityClasses\Actors\Enemies\Chaser.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="EntityClasses\Text\FlashingText.cs" />
     <Compile Include="EntityClasses\Text\Text.cs" />
     <Compile Include="EntityClasses\Text\TextBatch.cs" />
+    <Compile Include="EntityClasses\Weapons\Weapon.cs" />
     <Compile Include="GameWorld\GameWorld.cs" />
     <Compile Include="GameWorld\Moderator.cs" />
     <Compile Include="Input\InputManager.cs" />

@@ -7,6 +7,23 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Turtle
 {
+    struct AIParams
+    {
+        public float detectionDist; //detection distance of other actors
+        public float seperationDist; //seperation from group members
+
+        public float moveInOldDirWeight; //How much to move in old direction
+        public float moveInGroupDirWeight; //Move with the group
+        public float moveRandomDirWeight; //Random movement
+
+        public float maxTurnRadians; //Max amount can turn
+
+        public float perNeutralWeight; //how much neutral actors influence behavior
+        public float perEnvironmentWeight; //how much environment actors (walls) influence behavior
+        public float perDangerWeight; //how much dangerous objects influence behavior
+        public float perPlayerWeight; //how much a player will influence behavior
+    }
+
     class Enemy : Actor
     {
         protected Sprite EnemySprite;

@@ -209,6 +209,9 @@ namespace Turtle
                     VelocityX = MathHelper.Lerp(Velocity.X, 0, 0.1f);
                 }
 
+                if (Velocity.LengthSquared() != 0)
+                    Velocity.Normalize();
+
                 //mdifpx == Mouse difference Position X (gets the difference between the mouse and player position x coordinates
                 float mdifpx = target.Position.X - Position.X;
                 float mdifpy = target.Position.Y - Position.Y; //same as mdifpx but Y coordinate

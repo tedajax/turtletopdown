@@ -34,6 +34,9 @@ namespace Turtle
                 float y = (float)BaseGame.Rand.Next(-30, 30) / 10f;
 
                 s.Velocity = Vector2.Lerp(s.Velocity, new Vector2(x, y), 0.1f);
+                s.Scale += new Vector2(BaseGame.Rand.Next(-1, 2), BaseGame.Rand.Next(-1, 2)) / 100f;
+                s.ScaleX = MathHelper.Clamp(s.ScaleX, 0.2f, 1.8f);
+                s.ScaleY = MathHelper.Clamp(s.ScaleY, 0.2f, 1.8f);
                 s.Position += s.Velocity;
             }
         }
